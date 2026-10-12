@@ -1,0 +1,2511 @@
+openapi: 3.2.0
+info:
+  title: Swagger Petstore - OpenAPI 3.0 Trade API
+  description: This is a sample Pet Store Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+servers:
+- url: https://api.woox.io/
+tags:
+- name: Trade
+paths:
+  /v3/trade/order:
+    get:
+      description: get order
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: orderId
+        in: query
+        description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: withRealizedPnl
+        in: query
+        description: Whether to return order’s realized pnl; Note that realized PnL is only calculated for Perpetual close orders.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade order
+      x-summary-source: derived
+      operationId: getV3TradeOrder
+      x-operation-id-source: derived
+    post:
+      description: post order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Create trade order
+      x-summary-source: derived
+      operationId: postV3TradeOrder
+      x-operation-id-source: derived
+    put:
+      description: edit order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Replace trade order
+      x-summary-source: derived
+      operationId: putV3TradeOrder
+      x-operation-id-source: derived
+    delete:
+      description: cancel order
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: true
+        explode: true
+        schema:
+          type: string
+          default: SPOT_BTC_USDT
+      - name: orderId
+        in: query
+        description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Delete trade order
+      x-summary-source: derived
+      operationId: deleteV3TradeOrder
+      x-operation-id-source: derived
+  /v3/trade/orders:
+    get:
+      description: get orders
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: side
+        in: query
+        description: BUY/SELL
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: positionSide
+        in: query
+        description: BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: LIMIT/MARKET/IOC/FOK/POST_ONLY/LIQUIDATE/RPI/LIQUIDATE_BLP/ADL
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: orderTag
+        in: query
+        description: Order tag
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: withRealizedPnl
+        in: query
+        description: Whether to return order’s realized pnl; Note that realized PnL is only calculated for Perpetual close orders.
+        required: false
+        explode: true
+        schema:
+          type: boolean
+      - name: status
+        in: query
+        description: NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        description: Start timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: endTime
+        in: query
+        description: End timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: size
+        in: query
+        description: Data size per page, max 500
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 50
+          maximum: 500
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrdersResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade orders
+      x-summary-source: derived
+      operationId: getV3TradeOrders
+      x-operation-id-source: derived
+    delete:
+      description: Cancel multiple orders
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: false
+        explode: true
+        schema:
+          type: string
+          default: SPOT_BTC_USDT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Delete trade orders
+      x-summary-source: derived
+      operationId: deleteV3TradeOrders
+      x-operation-id-source: derived
+  /v3/trade/algoOrder:
+    get:
+      description: get algo order
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: algoOrderId
+        in: query
+        description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientAlgoOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlgoOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade algo order
+      x-summary-source: derived
+      operationId: getV3TradeAlgoOrder
+      x-operation-id-source: derived
+    post:
+      description: post algo order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/stop_order_stop_order'
+              - $ref: '#/components/schemas/oco_order_oco_order'
+              - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+              - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+              - $ref: '#/components/schemas/tp_sl_tp_sl'
+              - $ref: '#/components/schemas/bracket_bracket'
+              - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/StopResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Create trade algo order
+      x-summary-source: derived
+      operationId: postV3TradeAlgoOrder
+      x-operation-id-source: derived
+    put:
+      description: edit algo order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/stop_order'
+              - $ref: '#/components/schemas/oco_order'
+              - $ref: '#/components/schemas/trailing_stop'
+              - $ref: '#/components/schemas/positional_tp_sl'
+              - $ref: '#/components/schemas/tp_sl'
+              - $ref: '#/components/schemas/bracket'
+              - $ref: '#/components/schemas/stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Replace trade algo order
+      x-summary-source: derived
+      operationId: putV3TradeAlgoOrder
+      x-operation-id-source: derived
+    delete:
+      description: cancel algo order
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: algoOrderId
+        in: query
+        description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientAlgoOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Delete trade algo order
+      x-summary-source: derived
+      operationId: deleteV3TradeAlgoOrder
+      x-operation-id-source: derived
+  /v3/trade/algoOrders:
+    get:
+      description: get algo orders
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: side
+        in: query
+        description: BUY/SELL
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: positionSide
+        in: query
+        description: BOTH for one way mode; LONG or SHORT for hedge mode; Only applicable to perpetual instruments
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: algoType
+        in: query
+        description: STOP/OCO/TRAILING_STOP/POSITIONAL_TP_SL/TP_SL/BRACKET/STOP_BRACKET
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: orderType
+        in: query
+        description: LIMIT/MARKET
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: isTriggered
+        in: query
+        description: true/false
+        required: false
+        explode: true
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+      - name: algoOrderTag
+        in: query
+        description: Order tag
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: realizedPnl
+        in: query
+        description: Whether to return order’s realized pnl
+        required: false
+        explode: true
+        schema:
+          type: boolean
+      - name: status
+        in: query
+        description: NEW/CANCELLED/PARTIAL_FILLED/FILLED/REJECTED/INCOMPLETE/COMPLETED
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        description: Start timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: endTime
+        in: query
+        description: End timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: size
+        in: query
+        description: Data size per page, max 500
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 50
+          maximum: 500
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAlgoOrdersResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade algo orders
+      x-summary-source: derived
+      operationId: getV3TradeAlgoOrders
+      x-operation-id-source: derived
+    post:
+      description: post algo order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/stop_order_stop_order'
+              - $ref: '#/components/schemas/oco_order_oco_order'
+              - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+              - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+              - $ref: '#/components/schemas/tp_sl_tp_sl'
+              - $ref: '#/components/schemas/bracket_bracket'
+              - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/StopResponse'
+        '400':
+          description: Invalid status value
+      security: []
+      tags:
+      - Trade
+      summary: Create trade algo orders
+      x-summary-source: derived
+      operationId: postV3TradeAlgoOrders
+      x-operation-id-source: derived
+    put:
+      description: edit order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+        '400':
+          description: Invalid status value
+      security: []
+      tags:
+      - Trade
+      summary: Replace trade algo orders
+      x-summary-source: derived
+      operationId: putV3TradeAlgoOrders
+      x-operation-id-source: derived
+    delete:
+      description: cancel multiple algo orders
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: algoOrderId
+        in: query
+        description: Id of the algo order; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientAlgoOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Delete trade algo orders
+      x-summary-source: derived
+      operationId: deleteV3TradeAlgoOrders
+      x-operation-id-source: derived
+  /v3/trade/allOrders:
+    post:
+      description: post algo order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/stop_order_stop_order'
+              - $ref: '#/components/schemas/oco_order_oco_order'
+              - $ref: '#/components/schemas/trailing_stop_trailing_stop'
+              - $ref: '#/components/schemas/positional_tp_sl_positional_tp_sl'
+              - $ref: '#/components/schemas/tp_sl_tp_sl'
+              - $ref: '#/components/schemas/bracket_bracket'
+              - $ref: '#/components/schemas/stop_bracket_stop_bracket'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/StopResponse'
+        '400':
+          description: Invalid status value
+      security: []
+      tags:
+      - Trade
+      summary: Create trade all orders
+      x-summary-source: derived
+      operationId: postV3TradeAllOrders
+      x-operation-id-source: derived
+    put:
+      description: edit order
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditOrder'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Replace trade all orders
+      x-summary-source: derived
+      operationId: putV3TradeAllOrders
+      x-operation-id-source: derived
+    delete:
+      description: Cancel all orders by symbol
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: false
+        explode: true
+        schema:
+          type: string
+          default: SPOT_BTC_USDT
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelOrderResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Delete trade all orders
+      x-summary-source: derived
+      operationId: deleteV3TradeAllOrders
+      x-operation-id-source: derived
+  /v3/trade/transaction:
+    get:
+      description: get transaction by trade id (last 3 months)
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: tradeId
+        in: query
+        description: Id of the transaction; Either tradeId or clientOrderId is required. If both are passed, tradeId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade transaction
+      x-summary-source: derived
+      operationId: getV3TradeTransaction
+      x-operation-id-source: derived
+  /v3/trade/transactionHistory:
+    get:
+      description: Get transaction history (in the past 2 years)
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        description: Start timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+      - name: endTime
+        in: query
+        description: End timestamp in Unix timestamp format in milliseconds
+        required: false
+        explode: true
+        schema:
+          type: integer
+      - name: fromId
+        in: query
+        description: Trade Id to search from
+        required: false
+        explode: true
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Number of results per request
+        required: false
+        explode: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTransactionsResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade transaction history
+      x-summary-source: derived
+      operationId: getV3TradeTransactionHistory
+      x-operation-id-source: derived
+  /v3/trade/tradingFee:
+    get:
+      description: Get Trading Fee
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: true
+        explode: true
+        schema:
+          type: string
+          default: SPOT_BTC_USDT
+      - name: orderId
+        in: query
+        description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: clientOrderId
+        in: query
+        description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTradingFeeResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Get trade trading fee
+      x-summary-source: derived
+      operationId: getV3TradeTradingFee
+      x-operation-id-source: derived
+  /v3/trade/cancelAllAfter:
+    post:
+      description: Cancel all after
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAllAfter'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelAllAfterResponse'
+      security: []
+      tags:
+      - Trade
+      summary: Create trade cancel all after
+      x-summary-source: derived
+      operationId: postV3TradeCancelAllAfter
+      x-operation-id-source: derived
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    GetAlgoOrdersResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAlgoOrderRowResponse'
+                description: ''
+              meta:
+                $ref: '#/components/schemas/Meta'
+    positional_tp_sl_positional_tp_sl:
+      description: ''
+      title: Positional TP/SL
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        required:
+        - childOrders
+        properties:
+          algoType:
+            type: string
+            description: 'POSITIONAL_TP_SL: TP/SL that closes the full position'
+          childOrders:
+            type: array
+            description: Details of the positional TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+            items:
+              type: object
+              properties:
+                algoType:
+                  type: string
+                  description: TAKE_PROFIT/STOP_LOSS
+                side:
+                  type: string
+                  description: BUY/SELL
+                triggerPrice:
+                  type: string
+                  description: Trigger price
+                triggerPriceType:
+                  type: string
+                  description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                type:
+                  type: string
+                  description: Only support CLOSE_POSITION
+              required:
+              - algoType
+              - side
+              - triggerPrice
+              - type
+    positional_tp_sl:
+      description: ''
+      title: Positional TP/SL
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          childOrders:
+            type: array
+            description: Details of the TAKE_PROFIT and the STOP_LOSS order
+            items:
+              type: object
+              properties:
+                algoOrderId:
+                  type: string
+                  description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                triggerPrice:
+                  type: string
+                  description: New trigger price
+                triggerPriceType:
+                  type: string
+                  description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    GetTransactionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetTransactionsRowResponse'
+                description: ''
+              meta:
+                $ref: '#/components/schemas/Meta'
+    CancelAllAfterResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              expectedTriggerTime:
+                type: integer
+                description: ''
+    stop_bracket_stop_bracket:
+      description: ''
+      title: Stop bracket
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        required:
+        - type
+        - price
+        - childOrders
+        properties:
+          algoType:
+            type: string
+            description: 'STOP_BRACKET: bracket order with stop market or stop limit order as the initial order and an attached POSITIONAL_TP_SL or TP_SL order'
+          type:
+            type: string
+            description: LIMIT/MARKET
+          price:
+            type: string
+            description: Order price, only applicable if LIMIT order
+          reduceOnly:
+            type: boolean
+            description: Only applicable to perpetual instruments; whether the LIMIT/MARKET order can only reduce in position size; only support false for STOP_BRACKET orders
+          triggerPrice:
+            type: string
+            description: Trigger price of the initial stop order
+          triggerPriceType:
+            type: string
+            description: Trigger price type of the initial stop order, currently only support MARKET_PRICE (i.e. last price)
+          childOrders:
+            type: array
+            description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+            items:
+              type: object
+              properties:
+                algoType:
+                  type: string
+                  description: POSITIONAL_TP_SL/TP_SL
+                childOrders:
+                  type: array
+                  description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+                  items:
+                    type: object
+                    properties:
+                      algoType:
+                        type: string
+                        description: TAKE_PROFIT/STOP_LOSS
+                      side:
+                        type: string
+                        description: Required to be SELL if side of the initial order is BUY;  Required to be BUY if side of the initial order is SELL
+                      triggerPrice:
+                        type: string
+                        description: Trigger price of the TP/SL
+                      triggerPriceType:
+                        type: string
+                        description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                      type:
+                        type: string
+                        description: CLOSE_POSITION for POSITIONAL_TP_SL; MARKET for TP_SL
+                    required:
+                    - algoType
+                    - side
+                    - triggerPrice
+                    - type
+              required:
+              - algoType
+              - childOrders
+    EditOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ''
+                enum:
+                - NEW
+                - CANCELLED
+                - PARTIAL_FILLED
+                - FILLED
+                - REJECTED
+                - INCOMPLETE
+                - COMPLETED
+    GetTradingFeeResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              symbol:
+                type: string
+                description: Trading pair symbol, e.g., SPOT_ETH_USDT.
+              takerFee:
+                type: string
+                description: Fee rate for taker orders, represented as a string.
+              makerFee:
+                type: string
+                description: Fee rate for maker orders, represented as a string.
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+    CancelOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              status:
+                type: string
+                description: ''
+                enum:
+                - CANCELLED
+                - REJECTED
+    GetTransactionsRowResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the execution detail.
+        symbol:
+          type: string
+          description: Trading pair symbol, e.g., SPOT_BTC_USDT.
+        orderId:
+          type: integer
+          description: Identifier for the order to which this execution belongs.
+        orderTag:
+          type: string
+          description: Tag associated with the order, e.g., 'default'.
+        executedPrice:
+          type: string
+          description: Price at which the execution occurred.
+        executedQuantity:
+          type: string
+          description: Quantity of the asset that was executed.
+        isMaker:
+          type: integer
+          description: Indicates if the order was a maker order (1) or a taker order (0).
+        isMatchRpi:
+          type: boolean
+          description: Indicates if the order was a RPI order.
+        side:
+          type: string
+          description: Trade direction, e.g., SELL or BUY.
+          enum:
+          - BUY
+          - SELL
+        fee:
+          type: number
+          description: Trading fee incurred during the execution.
+        feeAsset:
+          type: string
+          description: Asset type used to pay the trading fee.
+        realizedPnl:
+          type:
+          - string
+          - 'null'
+          description: Realized profit and loss. Can be null if not applicable.
+        executedTimestamp:
+          type: integer
+          format: int64
+          description: Timestamp of the execution in Unix milliseconds.
+    trailing_stop:
+      description: ''
+      title: Trailing stop
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          activatedPrice:
+            type: string
+            description: New activated price for TRAILING_STOP order
+          triggerPriceType:
+            type: boolean
+            description: 'New trigger price type, currently only support MARKET_PRICE (i.e. last price);  Effective on activatedPrice '
+          callbackRate:
+            type: string
+            description: New trailing rate for TRAILING_STOP order;  Editing from using callbackRate to using callbackValue or vice versa is not allowed
+          callbackValue:
+            type: string
+            description: New trailing value for TRAILING_STOP order;  Editing from using callbackRate to using callbackValue or vice versa is not allowed
+    oco_order_oco_order:
+      description: ''
+      title: OCO
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        required:
+        - type
+        - price
+        - childOrders
+        properties:
+          algoType:
+            type: string
+            description: 'OCO: one-cancels-the-other order'
+          type:
+            type: string
+            description: Trigger price, only support LIMIT
+          price:
+            type: string
+            description: Order price, only applicable to LIMIT type
+          reduceOnly:
+            type: boolean
+            description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+          childOrders:
+            type: array
+            description: Details of the other order (i.e. the trigger order)
+            items:
+              type: object
+              properties:
+                algoType:
+                  type: string
+                  description: Only support STOP
+                side:
+                  type: string
+                  description: BUY/SELL; required to be the same as the side of the LIMIT order
+                triggerPrice:
+                  type: string
+                  description: Trigger price
+                triggerPriceType:
+                  type: string
+                  description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                type:
+                  type: string
+                  description: Order type of the trigger order, LIMIT/MARKET
+                price:
+                  type: string
+                  description: Order price of the trigger order, only applicable if it's a LIMIT order
+              required:
+              - algoType
+              - side
+              - triggerPrice
+              - type
+    EditOrder:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          description: Id of the order; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        clientOrderId:
+          type: integer
+          description: Client order Id as assigned by the user; Either orderId or clientOrderId is required. If both are passed, orderId will be used.
+        price:
+          type: string
+          description: Only applicable to LIMIT/IOC/FOK/POST_ONLY orders;  MARKET/ASK/BID orders will ignore this field
+          example: ''
+        quantity:
+          type: string
+          description: Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+    GetAlgoOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              algoOrderId:
+                type: integer
+                description: Unique identifier for the algorithmic order.
+              clientAlgoOrderId:
+                type: integer
+                description: Client-generated algorithmic order ID.
+              rootAlgoOrderId:
+                type: integer
+                description: Root algorithmic order ID.
+              parentAlgoOrderId:
+                type: integer
+                description: Parent algorithmic order ID, 0 if none.
+              symbol:
+                type: string
+                description: Trading pair identifier, e.g., SPOT_WOO_USDT.
+              orderTag:
+                type: string
+                description: Tag associated with the order, e.g., 'default'.
+              algoType:
+                type: string
+                description: Type of the algorithm, e.g., 'TRAILING_STOP'.
+                enum:
+                - STOP
+                - OCO
+                - TRAILING_STOP
+                - POSITIONAL_TP_SL
+                - TP_SL
+                - BRACKET
+                - STOP_BRACKET
+              side:
+                type: string
+                description: Order direction, e.g., 'BUY' or 'SELL'.
+                enum:
+                - BUY
+                - SELL
+              positionSide:
+                type: string
+                description: Position direction, e.g., 'BOTH'.
+                enum:
+                - BOTH
+                - LONG
+                - SHORT
+              quantity:
+                type: integer
+                description: The quantity for the order.
+              isTriggered:
+                type: boolean
+                description: Indicates if the order has been triggered.
+              triggerStatus:
+                type: string
+                description: The trigger status of the order, e.g., 'USELESS'.
+                enum:
+                - USELESS
+                - TRIGGERED
+                - CANCELLED
+              type:
+                type: string
+                description: Order type, e.g., 'MARKET'.
+                enum:
+                - LIMIT
+                - MARKET
+                - IOC
+                - POST_ONLY
+                - AC
+                - FOK
+                - LIQUIDATE
+                - BID
+                - ASK
+                - RPI
+              rootAlgoStatus:
+                type: string
+                description: Status of the root algorithmic order, e.g., 'NEW'.
+                enum:
+                - NEW
+                - CANCELLED
+                - PARTIAL_FILLED
+                - FILLED
+                - REJECTED
+              algoStatus:
+                type: string
+                description: Status of the algorithmic order, e.g., 'NEW'.
+                enum:
+                - NEW
+                - CANCELLED
+                - PARTIAL_FILLED
+                - FILLED
+                - REJECTED
+              triggerPriceType:
+                type: string
+                description: The type of price used for triggering, e.g., 'MARKET_PRICE'.
+                enum:
+                - MARKET_PRICE
+                - INDEX_PRICE
+                - LAST_PRICE
+              triggerTime:
+                type: string
+                description: Timestamp for when the order is triggered, '0' if not triggered.
+              totalExecutedQuantity:
+                type: string
+                description: Total quantity executed.
+              averageExecutedPrice:
+                type: string
+                description: Average price of executed quantity.
+              totalFee:
+                type: string
+                description: Total fee charged for the order.
+              feeAsset:
+                type: string
+                description: Asset used for paying the fees.
+              totalRebate:
+                type: string
+                description: Total rebate received for the order.
+              rebateCurrency:
+                type: string
+                description: Currency in which rebate is paid, e.g., 'USDT'.
+              reduceOnly:
+                type: boolean
+                description: Indicates if the order is reduce-only.
+              createdTime:
+                type: integer
+                description: Timestamp of when the order was created.
+              updatedTime:
+                type: integer
+                description: Timestamp of when the order was last updated.
+              isActivated:
+                type: boolean
+                description: Indicates if the order is activated.
+              callbackRate:
+                type: string
+                description: Callback rate for the algorithm, e.g., '0.03'.
+              activatedPrice:
+                type: string
+                description: Activated price for the algorithm, e.g., '0.21'.
+              leverage:
+                type: integer
+                example: 10
+                description: ''
+              marginMode:
+                type: string
+                example: ''
+                description: ''
+                enum:
+                - ISOLATED
+                - CROSSED
+    GetOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/GetOrderRowResponse'
+    stop_order_stop_order:
+      description: ''
+      title: Stop
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        properties:
+          algoType:
+            type: string
+            description: 'STOP: stop market / stop limit order'
+          triggerPrice:
+            type: string
+            description: Only support LIMIT
+          triggerPriceType:
+            type: string
+            description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+          type:
+            type: string
+            description: Trigger price, only support LIMIT
+          price:
+            type: string
+            description: Order price, only applicable to LIMIT type
+          reduceOnly:
+            type: boolean
+            description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+    oco_order:
+      description: ''
+      title: OCO
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          price:
+            type: string
+            description: New order price of the LIMIT order
+          childOrders:
+            type: array
+            description: Details of the trigger order
+            items:
+              type: object
+              properties:
+                triggerPrice:
+                  type: string
+                  description: New trigger price
+                triggerPriceType:
+                  type: string
+                  description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                price:
+                  type: string
+                  description: New order price, only applicable if trigger order type is LIMIT
+    bracket_bracket:
+      description: ''
+      title: Bracket
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        required:
+        - type
+        - price
+        - childOrders
+        properties:
+          algoType:
+            type: string
+            description: 'BRACKET: bracket order with limit or market order as the initial order and an attached POSITIONAL_TP_SL or TP_SL order'
+          type:
+            type: string
+            description: LIMIT/MARKET
+          price:
+            type: string
+            description: Order price, only applicable if LIMIT order
+          reduceOnly:
+            type: boolean
+            description: Only applicable to perpetual instruments; whether the LIMIT/MARKET order can only reduce in position size; only support false for BRACKET orders
+          childOrders:
+            type: array
+            description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+            items:
+              type: object
+              properties:
+                algoType:
+                  type: string
+                  description: TAKE_PROFIT/STOP_LOSS
+                side:
+                  type: string
+                  description: Required to be SELL if side of the initial order is BUY;  Required to be BUY if side of the initial order is SELL
+                triggerPrice:
+                  type: string
+                  description: Trigger price of the TP/SL
+                triggerPriceType:
+                  type: string
+                  description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                type:
+                  type: string
+                  description: CLOSE_POSITION for POSITIONAL_TP_SL; MARKET for TP_SL
+              required:
+              - algoType
+              - side
+              - triggerPrice
+              - type
+    CancelAllAfter:
+      required:
+      - triggerAfter
+      type: object
+      properties:
+        triggerAfter:
+          type: integer
+          description: Timeout in ms.  Max timeout can be set to 900000.  To cancel this timer, set timeout to 0.
+          example: '1711534302938'
+    tp_sl:
+      description: ''
+      title: TP/SL
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          childOrders:
+            type: array
+            description: Details of the TAKE_PROFIT and the STOP_LOSS order
+            items:
+              type: object
+              properties:
+                algoOrderId:
+                  type: string
+                  description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                triggerPrice:
+                  type: string
+                  description: New trigger price
+                triggerPriceType:
+                  type: string
+                  description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    GetOrdersResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetOrderRowResponse'
+                description: ''
+              meta:
+                $ref: '#/components/schemas/Meta'
+    bracket:
+      description: ''
+      title: Bracket
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          price:
+            type: string
+            description: Order price of the initial order, only applicable if the initial order type is LIMIT
+          childOrders:
+            type: array
+            description: Details of the Positional_TP_SL or the TP_SL order
+            items:
+              type: object
+              properties:
+                algoOrderId:
+                  type: string
+                  description: Algo order Id of the Positional_TP_SL or the TP_SL order
+                triggerPrice:
+                  type: string
+                  description: New trigger price
+                triggerPriceType:
+                  type: string
+                  description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    CreateOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              orderId:
+                type: integer
+                description: ''
+              type:
+                type: string
+                description: ''
+                enum:
+                - LIMIT
+                - MARKET
+                - IOC
+                - POST_ONLY
+                - AC
+                - FOK
+                - BID
+                - ASK
+                - RPI
+              price:
+                type: string
+                description: ''
+              quantity:
+                type: string
+                description: ''
+              amount:
+                type: string
+                description: ''
+              clientOrderId:
+                type: integer
+                description: ''
+              bidAskLevel:
+                type: integer
+                description: ''
+    tp_sl_tp_sl:
+      description: ''
+      title: TP/SL
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        required:
+        - childOrders
+        properties:
+          algoType:
+            type: string
+            description: 'TP_SL: TP/SL that closes a specified quantity'
+          childOrders:
+            type: array
+            description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+            items:
+              type: object
+              properties:
+                algoType:
+                  type: string
+                  description: TAKE_PROFIT/STOP_LOSS
+                side:
+                  type: string
+                  description: BUY/SELL
+                triggerPrice:
+                  type: string
+                  description: Trigger price
+                triggerPriceType:
+                  type: string
+                  description: Trigger price type, currently only support MARKET_PRICE (i.e. last price)
+                type:
+                  type: string
+                  description: Only support MARKET
+              required:
+              - algoType
+              - side
+              - triggerPrice
+              - type
+    GetOrderRowResponse:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PERP_BTC_USDT
+          description: Trading pair, e.g., BTC/USDT perpetual contract.
+        status:
+          type: string
+          example: FILLED
+          description: Order status, e.g., FILLED indicates the order has been fully executed.
+          enum:
+          - NEW
+          - CANCELLED
+          - PARTIAL_FILLED
+          - FILLED
+          - REJECTED
+        side:
+          type: string
+          example: SELL
+          description: Trade direction, e.g., SELL means selling, BUY means buying.
+          enum:
+          - BUY
+          - SELL
+        positionSide:
+          type: string
+          example: BOTH
+          description: Position direction, e.g., BOTH indicates a dual position mode.
+          enum:
+          - BOTH
+          - LONG
+          - SHORT
+        createdTime:
+          type: integer
+          format: int64
+          example: 1578565539808
+          description: Order creation time in Unix timestamp (milliseconds).
+        orderId:
+          type: integer
+          example: 13
+          description: Unique identifier for the order.
+        orderTag:
+          type: string
+          example: default
+          description: Order tag, e.g., default.
+        price:
+          type: string
+          example: '123'
+          description: Price of the limit order (price per unit of the asset).
+        type:
+          type: string
+          example: LIMIT
+          description: Order type, e.g., LIMIT represents a limit order.
+          enum:
+          - LIMIT
+          - MARKET
+          - IOC
+          - POST_ONLY
+          - AC
+          - FOK
+          - LIQUIDATE
+          - BID
+          - ASK
+          - RPI
+          - LIQUIDATE
+          - LIQUIDATE_BLP
+          - ADL
+        quantity:
+          type: string
+          example: '0.1'
+          description: Total quantity of the order, representing the number of assets.
+        amount:
+          type:
+          - string
+          - 'null'
+          example: null
+          description: Total order amount, may be null.
+        visible:
+          type: string
+          example: '0.1'
+          description: Visible quantity, representing the portion of the order shown to the market.
+        executed:
+          type: string
+          example: '0.1'
+          description: Quantity that has been executed.
+        totalFee:
+          type: string
+          example: '0.00123'
+          description: Total fee charged for the order, denominated in the fee asset.
+        feeAsset:
+          type: string
+          example: USDT
+          description: Asset type used to pay fees.
+        totalRebate:
+          type: number
+          example: 0
+          description: Total rebate amount.
+        rebateCurrency:
+          type: string
+          example: USDT
+          description: Asset type for the rebate.
+        clientOrderId:
+          type: integer
+          example: 0
+          description: Client-defined order ID.
+        reduceOnly:
+          type: boolean
+          example: false
+          description: Indicates whether the order is reduce-only.
+        realizedPnl:
+          type: string
+          example: '100'
+          description: Realized profit and loss, e.g., 100 means a profit of 100 USDT.
+        averageExecutedPrice:
+          type: string
+          example: '123'
+          description: Average price at which the order was executed.
+        leverage:
+          type: integer
+          example: 10
+          description: ''
+        marginMode:
+          type: string
+          example: ''
+          description: ''
+          enum:
+          - ISOLATED
+          - CROSSED
+        bidAskLevel:
+          type: integer
+          example: 2
+          description: ''
+    AlgoBaseResponse:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: algoOrderId
+        clientAlgoOrderId:
+          type: integer
+          description: clientAlgoOrderId
+        algoType:
+          type: string
+          description: ALGO_TYPE
+          enum:
+          - STOP
+          - OCO
+          - TRAILING_STOP
+          - POSITIONAL_TP_SL
+          - TP_SL
+          - BRACKET
+          - STOP_BRACKET
+        quantity:
+          type: string
+          description: quantity
+    common_algo:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: Algo order Id; Either algoOrderId or clientOrderId is required. If both are passed, algoOrderId will be used.
+        clientAlgoOrderId:
+          type: integer
+          description: Algo order client order Id; Either algoOrderId or clientAlgoOrderId is required. If both are passed, algoOrderId will be used.
+        quantity:
+          type: string
+          description: Order quantity, not required for POSITIONAL_TP_SL order
+        visibleQuantity:
+          type: integer
+          description: The order quantity shown on orderbook;  for POSITIONAL_TP_SL order, visibleQuantity applies directly to the child orders
+    GetTransactionResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Unique identifier for the order execution detail.
+              symbol:
+                type: string
+                description: Trading pair symbol, e.g., SPOT_BTC_USDT.
+              fee:
+                type: number
+                description: Trading fee incurred during the execution.
+              feeAsset:
+                type: string
+                description: Asset type used to pay the trading fee.
+              side:
+                type: string
+                description: Trade direction.
+                enum:
+                - BUY
+                - SELL
+              orderId:
+                type: integer
+                description: Identifier for the order to which this execution belongs.
+              executedPrice:
+                type: string
+                description: Price at which the execution occurred.
+              executedQuantity:
+                type: string
+                description: Quantity of the asset that was executed.
+              isMaker:
+                type: integer
+                description: Indicates if the order was a maker order (1) or a taker order (0).
+              realizedPnl:
+                type:
+                - string
+                - 'null'
+                description: Realized profit and loss. Can be null if not applicable.
+              executedTimestamp:
+                type: integer
+                format: int64
+                description: Timestamp of the execution in Unix milliseconds.
+              isMatchRpi:
+                type: boolean
+                example: false
+                description: Indicates if the order was a RPI order.
+    common_algo_common_algo:
+      type: object
+      required:
+      - symbol
+      - algoType
+      properties:
+        symbol:
+          type: string
+          description: Symbol name
+        clientAlgoOrderId:
+          type: integer
+          description: Client algo order Id as assigned by the user
+        algoOrderTag:
+          type: string
+          description: 'An optional tag for this order, max string length: 64'
+        side:
+          type: string
+          description: BUY/SELL, not required for POSITIONAL_TP_SL or TP_SL order
+        positionSide:
+          type: string
+          description: BOTH for one way mode; LONG or SHORT for hedge mode;  Only applicable to perpetual instruments
+        quantity:
+          type: string
+          description: Order quantity, not required for POSITIONAL_TP_SL order
+        visibleQuantity:
+          type: string
+          description: The order quantity shown on orderbook;  for POSITIONAL_TP_SL order, visibleQuantity applies directly to the child orders
+        marginMode:
+          type: string
+          description: CROSS / ISOLATED
+    stop_bracket:
+      description: ''
+      title: Stop bracket
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          price:
+            type: string
+            description: Order price of the initial order, only applicable if the initial order type is LIMIT
+          triggerPrice:
+            type: string
+            description: Trigger price of the initial stop order
+          triggerPriceType:
+            type: string
+            description: Trigger price type of the initial stop order, currently only support MARKET_PRICE (i.e. last price)
+          childOrders:
+            type: array
+            description: Attached TP/SL orders, only support 1 set of POSITIONAL_TP_SL or TP_SL
+            items:
+              type: object
+              properties:
+                algoOrderId:
+                  type: string
+                  description: Algo order Id of the Positional_TP_SL or the TP_SL order
+                childOrders:
+                  type: array
+                  description: Details of the TP/SL information, can contain at most 1 TAKE_PROFIT and 1 STOP_LOSS
+                  items:
+                    type: object
+                    properties:
+                      algoOrderId:
+                        type: string
+                        description: Algo order Id of the TAKE_PROFIT or the STOP_LOSS order
+                      triggerPrice:
+                        type: string
+                        description: New trigger price
+                      triggerPriceType:
+                        type: string
+                        description: New trigger price type, currently only support MARKET_PRICE (i.e. last price)
+    CreateOrder:
+      required:
+      - symbol
+      - side
+      - type
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Symbol name
+          example: SPOT_BTC_USDT
+        clientOrderId:
+          type: integer
+          description: Valid input ranges from 0 to 9223372036854775807
+          example: '1954766344355779056'
+        orderTag:
+          type: string
+          description: 'Optional tag for this order, max string length: 64'
+          example: ''
+        side:
+          type: string
+          description: BUY/SELL
+          example: ''
+        positionSide:
+          type: string
+          description: Position side; The default is BOTH in the one way mode;  Can only be LONG or SHORT in the hedge mode.  Only applicable to perpetual instruments.
+          example: ''
+        type:
+          type: string
+          description: LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID/AC/RPI where AC/RPI are only available to market makers.
+          example: ''
+        price:
+          type: string
+          description: Only applicable to LIMIT/IOC/FOK/POST_ONLY orders;  MARKET/ASK/BID orders will ignore this field
+          example: ''
+        quantity:
+          type: string
+          description: Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+        amount:
+          type: string
+          description: Only applicable to MARKET/ASK/BID orders on spot instruments;  Either quantity or amount is required;  If both are passed, the request will be rejected
+          example: ''
+        reduceOnly:
+          type: boolean
+          description: Only applicable to perpetual instruments; Whether the order can only reduce in position size; valid options are true/false
+          example: ''
+        visibleQuantity:
+          type: string
+          description: The order quantity visible on orderbook
+          example: ''
+        marginMode:
+          type: string
+          description: CROSS / ISOLATED
+          example: ''
+        bidAskLevel:
+          type: string
+          description: '[1..5](only effective if type = ASK / BID)'
+          example: ''
+        postOnlyAdjusted:
+          type: boolean
+          description: Only applicable to POST_ONLY orders; Whether the order should be adjusted to the best bid/ask if it would cross the book and execute immediately as a taker
+          example: ''
+    trailing_stop_trailing_stop:
+      description: ''
+      title: Trailing stop
+      allOf:
+      - $ref: '#/components/schemas/common_algo_common_algo'
+      - type: object
+        properties:
+          algoType:
+            type: string
+            description: 'TRAILING_STOP: trailing stop order '
+          type:
+            type: string
+            description: Trigger price, only support LIMIT
+          activatedPrice:
+            type: string
+            description: Activated price
+          callbackRate:
+            type: string
+            description: Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected
+          callbackValue:
+            type: string
+            description: Either callbackValue or callbackRate is required;  If both are passed, the request will be rejected
+          reduceOnly:
+            type: boolean
+            description: Only applicable to perpetual instruments; whether the order can only reduce in position size; valid options are true/false
+    stop_order:
+      description: ''
+      title: Stop
+      allOf:
+      - $ref: '#/components/schemas/common_algo'
+      - type: object
+        properties:
+          triggerPrice:
+            type: string
+            description: New trigger price
+          triggerPriceType:
+            type: string
+            description: 'New trigger price type, currently only support MARKET_PRICE (i.e. last price) '
+          price:
+            type: string
+            description: New order price, only applicable if type is LIMIT
+    GetAlgoOrderRowResponse:
+      type: object
+      properties:
+        algoOrderId:
+          type: integer
+          description: Unique identifier for the algorithmic order.
+        clientAlgoOrderId:
+          type: integer
+          description: Client-generated unique identifier for the algorithmic order.
+        rootAlgoOrderId:
+          type: integer
+          description: Root algorithmic order ID, linking to the original order.
+        parentAlgoOrderId:
+          type: integer
+          description: Parent algorithmic order ID, 0 if there is no parent order.
+        symbol:
+          type: string
+          description: Trading pair symbol, e.g., SPOT_WOO_USDT.
+        algoOrderTag:
+          type: string
+          description: Tag associated with the algorithmic order, e.g., 'default'.
+        algoType:
+          type: string
+          description: Type of algorithmic order, e.g., TRAILING_STOP.
+          enum:
+          - STOP
+          - OCO
+          - TRAILING_STOP
+          - POSITIONAL_TP_SL
+          - TP_SL
+          - BRACKET
+          - STOP_BRACKET
+        side:
+          type: string
+          description: Trade direction, e.g., SELL indicates selling.
+          enum:
+          - BUY
+          - SELL
+        positionSide:
+          type: string
+          description: Position side, e.g., BOTH indicates a dual position mode.
+          enum:
+          - BOTH
+          - LONG
+          - SHORT
+        quantity:
+          type: integer
+          description: Quantity for the algorithmic order.
+        isTriggered:
+          type: boolean
+          description: Indicates whether the order has been triggered.
+        triggerStatus:
+          type: string
+          description: Trigger status of the order, e.g., USELESS.
+          enum:
+          - USELESS
+          - TRIGGERED
+          - CANCELLED
+        type:
+          type: string
+          description: Order type, e.g., MARKET.
+          enum:
+          - LIMIT
+          - MARKET
+          - IOC
+          - POST_ONLY
+          - AC
+          - FOK
+          - LIQUIDATE
+          - BID
+          - ASK
+          - RPI
+        rootAlgoStatus:
+          type: string
+          description: Status of the root algorithmic order, e.g., NEW.
+          enum:
+          - NEW
+          - CANCELLED
+          - PARTIAL_FILLED
+          - FILLED
+          - REJECTED
+        algoStatus:
+          type: string
+          description: Status of the algorithmic order, e.g., NEW.
+          enum:
+          - NEW
+          - CANCELLED
+          - PARTIAL_FILLED
+          - FILLED
+          - REJECTED
+        triggerPriceType:
+          type: string
+          description: Price type used for triggering, e.g., MARKET_PRICE.
+          enum:
+          - MARKET_PRICE
+          - INDEX_PRICE
+          - LAST_PRICE
+        triggerTime:
+          type: string
+          description: Timestamp when the order was triggered, '0' if not triggered.
+        totalExecutedQuantity:
+          type: string
+          description: Total executed quantity for the order.
+        averageExecutedPrice:
+          type: string
+          description: Average price of the executed quantity.
+        totalFee:
+          type: string
+          description: Total fee charged for the algorithmic order.
+        feeAsset:
+          type: string
+          description: Asset type used for paying fees, e.g., USDT.
+        totalRebate:
+          type: number
+          description: Total rebate received for the order.
+        rebateCurrency:
+          type: string
+          description: Currency in which the rebate is paid, e.g., USDT.
+        reduceOnly:
+          type: boolean
+          description: Indicates whether the order is reduce-only.
+        createdTime:
+          type: integer
+          format: int64
+          description: Timestamp when the order was created (in milliseconds).
+        updatedTime:
+          type: integer
+          format: int64
+          description: Timestamp when the order was last updated (in milliseconds).
+        isActivated:
+          type: boolean
+          description: Indicates whether the algorithmic order is activated.
+        callbackRate:
+          type: string
+          description: Callback rate for the algorithmic order.
+        activatedPrice:
+          type: string
+          description: Activated price for the algorithmic order.
+        leverage:
+          type: integer
+          example: 10
+          description: ''
+        marginMode:
+          type: string
+          example: ''
+          description: ''
+          enum:
+          - ISOLATED
+          - CROSSED
+    StopResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlgoBaseResponse'
+                description: ''
+  parameters:
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

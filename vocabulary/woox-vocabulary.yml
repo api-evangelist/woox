@@ -1,0 +1,120 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/woox-openapi.json
+vocabulary:
+  name: WOO X Domain Vocabulary
+  description: 'Terms declared by WOO X''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-13'
+  terms:
+  - term: CommonResponse
+    definition: 'Object declared by the contract with fields: success, timestamp.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/CommonResponse
+  - term: GetOrderRowResponse
+    definition: 'Object declared by the contract with fields: symbol, status, side, positionSide, createdTime, orderId, orderTag, price, type,
+      quantity, amount, visible. (12 more)'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/GetOrderRowResponse
+  - term: EditOrder
+    definition: 'Object declared by the contract with fields: orderId, clientOrderId, price, quantity.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/EditOrder
+  - term: CreateOrder
+    definition: 'Object declared by the contract with fields: symbol, clientOrderId, orderTag, side, positionSide, type, price, quantity, amount,
+      reduceOnly, visibleQuantity, marginMode. (2 more)'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/CreateOrder
+  - term: Meta
+    definition: 'Object declared by the contract with fields: total, recordsPerPage, currentPage.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/Meta
+  - term: common_algo
+    definition: 'Object declared by the contract with fields: algoOrderId, clientAlgoOrderId, quantity, visibleQuantity.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/common_algo
+  - term: common_algo_common_algo
+    definition: 'Object declared by the contract with fields: symbol, clientAlgoOrderId, algoOrderTag, side, positionSide, quantity, visibleQuantity,
+      marginMode.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/common_algo_common_algo
+  - term: AlgoBaseResponse
+    definition: 'Object declared by the contract with fields: algoOrderId, clientAlgoOrderId, algoType, quantity.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/AlgoBaseResponse
+  - term: GetAlgoOrderRowResponse
+    definition: 'Object declared by the contract with fields: algoOrderId, clientAlgoOrderId, rootAlgoOrderId, parentAlgoOrderId, symbol, algoOrderTag,
+      algoType, side, positionSide, quantity, isTriggered, triggerStatus. (19 more)'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/GetAlgoOrderRowResponse
+  - term: GetTransactionsRowResponse
+    definition: 'Object declared by the contract with fields: id, symbol, orderId, orderTag, executedPrice, executedQuantity, isMaker, isMatchRpi,
+      side, fee, feeAsset, realizedPnl. (1 more)'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/GetTransactionsRowResponse
+  - term: CancelAllAfter
+    definition: 'Object declared by the contract with fields: triggerAfter.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/CancelAllAfter
+  - term: SetTradingMode
+    definition: 'Object declared by the contract with fields: tradingMode.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/SetTradingMode
+  - term: GetListenKey
+    definition: 'Object declared by the contract with fields: type.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/GetListenKey
+  - term: SetLeverage
+    definition: 'Object declared by the contract with fields: leverage.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/SetLeverage
+  - term: InterestRepay
+    definition: 'Object declared by the contract with fields: token, amount.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/InterestRepay
+  - term: Transfer
+    definition: 'Object declared by the contract with fields: token, amount, from, to.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/Transfer
+  - term: Withdraw
+    definition: 'Object declared by the contract with fields: token, network, amount, extra, address.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/Withdraw
+  - term: SetAccountMarginMode
+    definition: 'Object declared by the contract with fields: defaultMarginMode.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/SetAccountMarginMode
+  - term: SetFuturesLeverage
+    definition: 'Object declared by the contract with fields: symbol, marginMode, positionMode, leverage.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/SetFuturesLeverage
+  - term: AdjustMargin
+    definition: 'Object declared by the contract with fields: symbol, positionSide, adjustToken, adjustAmount, action.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/AdjustMargin
+  - term: PositionMode
+    definition: 'Object declared by the contract with fields: positionMode.'
+    tags:
+    - Object
+    source: openapi/woox-openapi.json#/components/schemas/PositionMode

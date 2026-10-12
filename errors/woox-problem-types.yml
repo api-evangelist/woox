@@ -1,0 +1,19 @@
+generated: '2026-10-13'
+method: derived
+generator: derive-problem-types.py
+source:
+- openapi/woox-openapi.json
+format: custom
+envelope:
+  media_type: null
+  schema: null
+coverage:
+  operations: 68
+  statuses_declared: 1
+problems:
+- status: 400
+  title: Bad Request
+  description: Invalid status value
+  operations: 3
+  media_types: []
+  schema: null

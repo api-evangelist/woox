@@ -1,23 +1,288 @@
 aid: woox
+
 name: WOO X
-description: 'WOO X is a company surfaced via the API Evangelist harvest backlog (source: market-gap)
-  and added to the network as a stub for full-pipeline profiling.'
+
+image: https://oss.woonetwork.org/static/woox/SEO_20240724.png
+
+description: WOO X is a centralized cryptocurrency exchange offering spot, margin and perpetual futures trading. Its V3 REST API at api.woox.io
+  exposes public market data (instruments, orderbook, klines, trades, funding rates) and authenticated trading, account, asset/wallet, spot-margin
+  and futures endpoints, documented at developer.woox.io with a published OpenAPI definition and a documentation MCP server.
+
 url: https://raw.githubusercontent.com/api-evangelist/woox/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:market-gap
+
 x-tier: stub
+
 x-tier-reason: harvest
+
 specificationVersion: '0.20'
+
 created: '2026-10-13'
+
 modified: '2026-10-13'
+
 tags:
 - Company
-apis: []
+- Cryptocurrency
+- Exchanges
+- Trading
+- Derivatives
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: TermsOfService
+  url: https://support.woox.io/hc/en-us/articles/4403851854233-Terms-of-service
+- type: AgenticAccess
+  url: agentic-access/woox-agentic-access.yml
+- type: Spectral
+  url: rules/woox-rules.yml
+- type: JSONLD
+  url: json-ld/woox-context.jsonld
+- type: Vocabulary
+  url: vocabulary/woox-vocabulary.yml
+- type: DataModel
+  url: data-model/woox-data-model.yml
+- type: ErrorCatalog
+  url: errors/woox-problem-types.yml
+- type: Conformance
+  url: conformance/woox-conformance.yml
+- type: LLMsTxt
+  url: llms/woox-llms.txt
+- type: AgentCard
+  url: a2a/woox-a2a.yml
+- type: WellKnown
+  url: well-known/woox-well-known.yml
+- type: Hosts
+  url: hosts/woox-hosts.yml
+- type: Vendors
+  url: vendors/woox-vendors.yml
+- type: Authentication
+  url: authentication/woox-authentication.yml
 - type: Website
   url: https://woox.io
+- type: DeveloperPortal
+  url: https://developer.woox.io/home
+- type: APIReference
+  url: https://developer.woox.io/api-reference
+- type: Documentation
+  url: https://developer.woox.io/api-reference/introduction
+- type: GettingStarted
+  url: https://developer.woox.io/api-reference/guide
+- type: ChangeLog
+  url: https://developer.woox.io/changelog/release_note_v3
+- type: Blog
+  url: https://woox.io/blog
+- type: Leadership
+  url: https://woox.io/team
+- type: Support
+  url: https://support.woox.io/hc/en-us
+- type: PrivacyPolicy
+  url: https://support.woox.io/hc/en-us/articles/4404573651097--Privacy-Policy
+- type: MCPServer
+  url: mcp/woox-mcp.yml
+- type: DomainSecurity
+  url: security/woox-domain-security.yml
+
+apis:
+- aid: woox:woox-docs-mcp
+  name: WOO Developer Docs MCP Server
+  description: >-
+    Hosted documentation MCP server exposing search and read-only query over the WOO developer documentation.
+  humanURL: https://developer.woox.io/home
+  baseURL: https://developer.woox.io/mcp
+  tags:
+  - MCP
+  properties:
+  - type: MCPServer
+    url: mcp/woox-mcp.yml
+- aid: woox:woox-account-api
+  name: WOO X Account API
+  description: The Account API from WOO X — 9 operation(s) for account.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-account-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-asset-api
+  name: WOO X Asset API
+  description: The Asset API from WOO X — 9 operation(s) for asset.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - Asset
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-asset-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-futures-api
+  name: WOO X Futures API
+  description: The Futures API from WOO X — 7 operation(s) for futures.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - Futures
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-futures-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-isolatedmargin-api
+  name: WOO X Isolated Margin API
+  description: The IsolatedMargin API from WOO X — 1 operation(s) for isolatedmargin.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - IsolatedMargin
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-isolatedmargin-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-public-api
+  name: WOO X Public API
+  description: The Public API from WOO X — 14 operation(s) for public.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - Public
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-public-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-spotmargin-api
+  name: WOO X Spot Margin API
+  description: The SpotMargin API from WOO X — 5 operation(s) for spotmargin.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - SpotMargin
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-spotmargin-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+- aid: woox:woox-trade-api
+  name: WOO X Trade API
+  description: The Trade API from WOO X — 9 operation(s) for trade.
+  humanURL: https://developer.woox.io/api-reference
+  baseURL: https://api.woox.io
+  tags:
+  - Trade
+  properties:
+  - type: OpenAPI
+    url: openapi/woox-trade-api-openapi.yml
+  - type: APIReference
+    url: https://developer.woox.io/api-reference
+  - type: JSONSchema
+    url: json-schema/woox-get-algo-order-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-wallet-history-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-account-info-response-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-create-order-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-stop-bracket-stop-bracket-schema.json
+  - type: JSONSchema
+    url: json-schema/woox-get-balances-response-schema.json
+x-coverage:
+  state: none
+  reason: no-developer-program
+  method: derived
+  generated: '2026-10-13'
+  generator: derive-coverage.py (pre-flight evidence)
+  detail: >-
+    the company publishes no developer documentation host and no machine-readable contract on its own domain
+  evidence:
+  - url: https://developer.woox.io/mcp
+    status: null
+  - url: https://support.woox.io/mcp
+    status: 401
+  - url: https://woox.io
+    status: 200

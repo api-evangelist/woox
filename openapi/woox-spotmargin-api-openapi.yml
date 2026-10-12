@@ -1,0 +1,415 @@
+openapi: 3.2.0
+info:
+  title: Swagger Petstore - OpenAPI 3.0 Spot Margin API
+  description: This is a sample Pet Store Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+servers:
+- url: https://api.woox.io/
+tags:
+- name: SpotMargin
+paths:
+  /v3/spotMargin/leverage:
+    post:
+      description: set leverage
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLeverage'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - SpotMargin
+      summary: Create spot margin leverage
+      x-summary-source: derived
+      operationId: postV3SpotMarginLeverage
+      x-operation-id-source: derived
+  /v3/spotMargin/interestRate:
+    get:
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestRateResponse'
+      security: []
+      tags:
+      - SpotMargin
+      summary: Get spot margin interest rate
+      x-summary-source: derived
+      operationId: getV3SpotMarginInterestRate
+      x-operation-id-source: derived
+  /v3/spotMargin/interestHistory:
+    get:
+      description: get spot margin interest history
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: token
+        in: query
+        description: Token name in upper case
+        required: true
+        schema:
+          type: string
+      - name: side
+        in: query
+        description: LOAN/REPAY/AUTO_REPAY
+        required: false
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        description: Start timestamp in Unix timestamp format in milliseconds
+        required: false
+        schema:
+          type: integer
+      - name: endTime
+        in: query
+        description: End timestamp in Unix timestamp format in milliseconds
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: Data size per page
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInterestHistoryResponse'
+      security: []
+      tags:
+      - SpotMargin
+      summary: Get spot margin interest history
+      x-summary-source: derived
+      operationId: getV3SpotMarginInterestHistory
+      x-operation-id-source: derived
+  /v3/spotMargin/interestRepay:
+    post:
+      description: Repay your margin interest.
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterestRepay'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - SpotMargin
+      summary: Create spot margin interest repay
+      x-summary-source: derived
+      operationId: postV3SpotMarginInterestRepay
+      x-operation-id-source: derived
+  /v3/spotMargin/maxMargin:
+    get:
+      description: Get max available margin for a given spot instrument.
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name, applicable to spot instruments only
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMaxMarginResponse'
+      security: []
+      tags:
+      - SpotMargin
+      summary: Get spot margin max margin
+      x-summary-source: derived
+      operationId: getV3SpotMarginMaxMargin
+      x-operation-id-source: derived
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    InterestRepay:
+      required:
+      - token
+      - amount
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        amount:
+          type: number
+          description: Repay amount
+    GetInterestHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the loan transaction.
+                    token:
+                      type: string
+                      description: The token symbol associated with the loan, e.g., 'USDT'.
+                    side:
+                      type: string
+                      description: The transaction side, e.g., 'LOAN' for loan transactions.
+                      enum:
+                      - LOAN
+                      - REPAY
+                      - AUTO_REPAY
+                    status:
+                      type: string
+                      description: The transaction status, e.g., 'SUCCEED' for completed transactions.
+                      enum:
+                      - SUCCEED
+                      - FAILED
+                    quantity:
+                      type: string
+                      description: The quantity of the token involved in the loan transaction.
+                    userId:
+                      type: integer
+                      description: The unique identifier of the user involved in the transaction.
+                    applicationId:
+                      type: string
+                      description: The unique identifier for the application associated with the transaction.
+                    interest:
+                      type: string
+                      description: The interest amount incurred on the loan transaction.
+                    hourlyRate:
+                      type: string
+                      description: The hourly interest rate for the loan.
+                    annualRate:
+                      type: string
+                      description: The annual interest rate for the loan.
+                    createdTime:
+                      type: integer
+                      description: The time the loan transaction was created, represented as a Unix timestamp (milliseconds).
+                    updatedTime:
+                      type: integer
+                      description: The time the loan transaction was last updated, represented as a Unix timestamp (milliseconds).
+                    loanAmount:
+                      type: string
+                      description: The total loan amount involved in the transaction.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    GetMaxMarginResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              symbol:
+                type: string
+                description: The trading pair symbol, e.g., 'SPOT_ETH_USDT'.
+              availableBaseQuantity:
+                type: string
+                description: The maximum available quantity of the base token to sell into the quote token.
+              availableQuoteQuantity:
+                type: string
+                description: The maximum available quantity of the quote token to buy the base token.
+    SetLeverage:
+      required:
+      - leverage
+      type: object
+      properties:
+        leverage:
+          type: integer
+          description: 'For margin mode: 3, 4, 5, 10; for futures mode: 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50'
+          example: '5'
+    InterestRateResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: The token symbol, e.g., 'MATIC'.
+                    currentHourlyBaseRate:
+                      type: string
+                      description: The current hourly base rate for the token.
+                    estHourlyBaseRate:
+                      type: string
+                      description: The estimated hourly base rate for the token.
+                    currentAnnualBaseRate:
+                      type: string
+                      description: The current annual base rate for the token.
+                    estAnnualBaseRate:
+                      type: string
+                      description: The estimated annual base rate for the token.
+                    estTime:
+                      type: integer
+                      description: The estimated time in Unix timestamp (milliseconds).
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+  parameters:
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

@@ -1,0 +1,966 @@
+openapi: 3.2.0
+info:
+  title: Swagger Petstore - OpenAPI 3.0 Asset API
+  description: This is a sample Pet Store Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+servers:
+- url: https://api.woox.io/
+tags:
+- name: Asset
+paths:
+  /v3/asset/token/history:
+    get:
+      description: get token history
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: type
+        in: query
+        description: Transaction type filter
+        required: false
+        explode: true
+        schema:
+          type: string
+          enum:
+          - WITHDRAW
+          - DEPOSIT
+          - FIAT_WITHDRAW
+          - FIAT_DEPOSIT
+          - EARN
+          - VAULT_WITHDRAW
+          - VAULT_DEPOSIT
+          - YIELD_TO_BALANCE
+          - CREDIT
+          - DISTRIBUTION
+          - REFERRAL
+          - SUB_ACCOUNT_TRANSFER
+          - REBATE
+          - LIQUIDATION
+          - SPECIAL
+          - STAKING
+          - UNSTAKING
+          - UNSTAKING_FEE
+          - INTEREST
+          - CONVERT
+          - FUNDING_FEE
+          - REALIZED_PNL
+          - RFQ
+          - COPY_FEE
+          - COPY_PROFIT_SHARED
+          - SPOT_TRANSACTION
+          - TRANSACTION_FEE
+      - $ref: '#/components/parameters/start_filter'
+      - $ref: '#/components/parameters/end_filter'
+      - $ref: '#/components/parameters/page_filter'
+      - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenHistoryResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset token history
+      x-summary-source: derived
+      operationId: getV3AssetTokenHistory
+      x-operation-id-source: derived
+  /v3/asset/transfer/history:
+    get:
+      description: Get Transfer History
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - $ref: '#/components/parameters/start_filter'
+      - $ref: '#/components/parameters/end_filter'
+      - $ref: '#/components/parameters/page_filter'
+      - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferHistoryResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset transfer history
+      x-summary-source: derived
+      operationId: getV3AssetTransferHistory
+      x-operation-id-source: derived
+  /v3/asset/transfer:
+    post:
+      description: transfer assets
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Transfer'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Create asset transfer
+      x-summary-source: derived
+      operationId: postV3AssetTransfer
+      x-operation-id-source: derived
+  /v3/asset/wallet/history:
+    get:
+      description: Get Wallet History
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: id
+        in: query
+        description: use when query specific transaction id (the result of withdrawal or internal transfer.)
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: network
+        in: query
+        description: network name you want to search (from /v1/public/token)
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: token
+        in: query
+        description: 'token name you want to search '
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: BALANCE/COLLATERAL
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: tokenSide
+        in: query
+        description: DEPOSIT/WITHDRAW
+        required: false
+        explode: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: NEW/CONFIRMING/PROCESSING/COMPLETED/CANCELED
+        required: false
+        explode: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/start_filter'
+      - $ref: '#/components/parameters/end_filter'
+      - $ref: '#/components/parameters/page_filter'
+      - $ref: '#/components/parameters/size_filter'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletHistoryResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset wallet history
+      x-summary-source: derived
+      operationId: getV3AssetWalletHistory
+      x-operation-id-source: derived
+  /v3/asset/wallet/deposit:
+    get:
+      description: Get Token Deposit Address
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: token
+        in: query
+        description: 'token name you want to search '
+        required: true
+        explode: true
+        schema:
+          type: string
+      - name: network
+        in: query
+        description: network name you want to search (from /v3/public/token)
+        required: true
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDepositResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset wallet deposit
+      x-summary-source: derived
+      operationId: getV3AssetWalletDeposit
+      x-operation-id-source: derived
+  /v3/asset/wallet/withdraw/{withdrawId}:
+    delete:
+      description: Cancel Withdraw Request
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: withdrawId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The unique identifier of the withdrawal request to be canceled.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Delete asset wallet withdraw by withdraw id
+      x-summary-source: derived
+      operationId: deleteV3AssetWalletWithdrawByWithdrawId
+      x-operation-id-source: derived
+  /v3/asset/wallet/withdraw:
+    post:
+      description: withdraw assets
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Withdraw'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Create asset wallet withdraw
+      x-summary-source: derived
+      operationId: postV3AssetWalletWithdraw
+      x-operation-id-source: derived
+  /v3/asset/staking/yieldHistory:
+    get:
+      description: Get Staking Yield History
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: token
+        in: query
+        description: Token name in upper case
+        required: true
+        explode: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: the page you wish to query.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: size
+        in: query
+        description: the page size you wish to query, default = 25, 1000 at max.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 25
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/YieldHistoryResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset staking yield history
+      x-summary-source: derived
+      operationId: getV3AssetStakingYieldHistory
+      x-operation-id-source: derived
+  /v3/asset/balances:
+    get:
+      description: Get balances
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: token
+        in: query
+        description: Token to query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBalancesResponse'
+      security: []
+      tags:
+      - Asset
+      summary: Get asset balances
+      x-summary-source: derived
+      operationId: getV3AssetBalances
+      x-operation-id-source: derived
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    WithdrawResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              withdrawId:
+                type: string
+                description: ''
+    YieldHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Unique identifier for the staking entry.
+                    token:
+                      type: string
+                      description: The token being staked (e.g., WOO).
+                    stakingSize:
+                      type: string
+                      description: The amount of tokens currently staked.
+                    annualReward:
+                      type: string
+                      description: The annual reward rate for the staked token.
+                    yieldAmount:
+                      type: string
+                      description: The amount of yield earned so far.
+                    yieldTime:
+                      type: string
+                      description: The timestamp (Unix epoch in seconds) for the last yield calculation or payout.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    TransferResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: number
+                description: ''
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+    Withdraw:
+      required:
+      - token
+      - network
+      - amount
+      - address
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        network:
+          type: string
+          description: Network name (from /v3/public/token)
+        amount:
+          type: number
+          description: withdraw amount
+          example: ''
+        extra:
+          type: string
+          description: address extra information such as MEMO or TAG
+          example: ''
+        address:
+          type: string
+          description: the address you want to withdraw
+          example: ''
+    WalletHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    createdTime:
+                      type: string
+                      description: The time the transaction was created, in Unix epoch time (seconds).
+                    updatedTime:
+                      type: string
+                      description: The time the transaction was last updated, in Unix epoch time (seconds).
+                    id:
+                      type: string
+                      description: The unique identifier for the transaction.
+                    externalId:
+                      type: string
+                      description: The external identifier for the transaction, if applicable.
+                    applicationId:
+                      type: string
+                      description: The application ID related to the transaction, or null if not applicable.
+                    token:
+                      type: string
+                      description: The token symbol involved in the transaction, e.g., 'ETH'.
+                    targetAddress:
+                      type: string
+                      description: The target blockchain address for the transaction.
+                    sourceAddress:
+                      type: string
+                      description: The source blockchain address for the transaction.
+                    confirmingThreshold:
+                      type: integer
+                      description: The number of confirmations required for the transaction to be considered confirmed.
+                    confirmedNumber:
+                      type: integer
+                      description: The current number of confirmations received for the transaction.
+                    extra:
+                      type: string
+                      description: Additional information about the transaction, if any.
+                    type:
+                      type: string
+                      description: The transaction type, e.g., 'BALANCE'.
+                      enum:
+                      - BALANCE
+                      - TRANSFER
+                      - TRADE
+                      - FEE
+                      - OTHER
+                    tokenSide:
+                      type: string
+                      description: The token side for the transaction, e.g., 'DEPOSIT' or 'WITHDRAWAL'.
+                      enum:
+                      - DEPOSIT
+                      - WITHDRAWAL
+                    amount:
+                      type: string
+                      description: The amount of the token involved in the transaction.
+                    txId:
+                      type: string
+                      description: The blockchain transaction ID.
+                    feeToken:
+                      type: string
+                      description: The token used to pay transaction fees, or null if not applicable.
+                    feeAmount:
+                      type: string
+                      description: The amount of fees paid for the transaction, or null if not applicable.
+                    status:
+                      type: string
+                      description: The current status of the transaction, e.g., 'CONFIRMING', 'SUCCEEDED', or 'FAILED'.
+                      enum:
+                      - CONFIRMING
+                      - SUCCEEDED
+                      - FAILED
+              meta:
+                $ref: '#/components/schemas/Meta'
+    TransferHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the transfer.
+                    token:
+                      type: string
+                      description: The token symbol for the transfer, e.g., 'USDT'.
+                    amount:
+                      type: string
+                      description: The amount of the token transferred.
+                    status:
+                      type: string
+                      description: The status of the transfer, e.g., 'COMPLETED'.
+                      enum:
+                      - COMPLETED
+                      - FAILED
+                    from:
+                      type: object
+                      description: The source account details for the transfer.
+                      properties:
+                        applicationId:
+                          type: string
+                          description: The application ID of the source account.
+                        accountName:
+                          type: string
+                          description: The account name of the source account.
+                    to:
+                      type: object
+                      description: The destination account details for the transfer.
+                      properties:
+                        applicationId:
+                          type: string
+                          description: The application ID of the destination account.
+                        accountName:
+                          type: string
+                          description: The account name of the destination account.
+                    createdTime:
+                      type: string
+                      description: The time the transfer was created, represented as a string timestamp.
+                    updatedTime:
+                      type: string
+                      description: The time the transfer was last updated, represented as a string timestamp.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    Transfer:
+      required:
+      - tradingMode
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        amount:
+          type: number
+          description: withdraw amount
+        from:
+          type: object
+          properties:
+            applicationId:
+              type: string
+              description: the application which will transfer asset out
+        to:
+          type: object
+          properties:
+            applicationId:
+              type: string
+              description: the application which will transfer asset in
+    WalletDepositResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              address:
+                type: string
+                description: The deposit address for the token.
+              extra:
+                type: string
+                description: ''
+    TokenHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ''
+                    type:
+                      type: string
+                      description: type
+                      enum:
+                      - WITHDRAW
+                      - DEPOSIT
+                      - FIAT_WITHDRAW
+                      - FIAT_DEPOSIT
+                      - EARN
+                      - VAULT_WITHDRAW
+                      - VAULT_DEPOSIT
+                      - YIELD_TO_BALANCE
+                      - CREDIT
+                      - DISTRIBUTION
+                      - REFERRAL
+                      - SUB_ACCOUNT_TRANSFER
+                      - REBATE
+                      - LIQUIDATION
+                      - SPECIAL
+                      - STAKING
+                      - UNSTAKING
+                      - UNSTAKING_FEE
+                      - INTEREST
+                      - CONVERT
+                      - FUNDING_FEE
+                      - REALIZED_PNL
+                      - RFQ
+                      - COPY_FEE
+                      - COPY_PROFIT_SHARED
+                      - SPOT_TRANSACTION
+                      - TRANSACTION_FEE
+                    token:
+                      type: string
+                      description: token
+                    amount:
+                      type: string
+                      description: amount
+                    timestamp:
+                      type: integer
+                      description: timestamp
+              meta:
+                $ref: '#/components/schemas/Meta'
+    GetBalancesResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              holding:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: The token symbol (e.g., WOO).
+                    holding:
+                      type: string
+                      description: The total amount of the token currently held by the user.
+                    frozen:
+                      type: string
+                      description: The amount of the token that is frozen (e.g., due to open orders or other restrictions).
+                    staked:
+                      type: string
+                      description: The amount of the token that is currently staked.
+                    unbonding:
+                      type: string
+                      description: The amount of the token that is in the unbonding period.
+                    vault:
+                      type: string
+                      description: The amount of the token in the vault.
+                    interest:
+                      type: string
+                      description: The interest earned from holding the token.
+                    earn:
+                      type: string
+                      description: The amount of the token earned from yield or other programs.
+                    pendingShortQty:
+                      type: string
+                      description: The pending quantity for short positions.
+                    pendingLongQty:
+                      type: string
+                      description: The pending quantity for long positions.
+                    availableBalance:
+                      type: string
+                      description: The available balance of the token for trading or withdrawal.
+                    averageOpenPrice:
+                      type: string
+                      description: The average open price of the user's positions in the token.
+                    markPrice:
+                      type: string
+                      description: The current market price of the token.
+                    pnl24H:
+                      type: string
+                      description: The profit or loss in the past 24 hours for this token.
+                    fee24H:
+                      type: string
+                      description: The total fees incurred in the past 24 hours for this token.
+                    timestamp:
+                      type: integer
+                      format: int64
+                      description: The timestamp (Unix epoch in milliseconds) of the data snapshot.
+  parameters:
+    page_filter:
+      name: page
+      in: query
+      description: the page you wish to query.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 1
+    start_filter:
+      name: startTime
+      in: query
+      description: start www time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+    size_filter:
+      name: size
+      in: query
+      description: the page size you wish to query, default = 25, 1000 at max.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 25
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    end_filter:
+      name: endTime
+      in: query
+      description: end time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

@@ -1,0 +1,123 @@
+openapi: 3.2.0
+info:
+  title: Swagger Petstore - OpenAPI 3.0 Isolated Margin API
+  description: This is a sample Pet Store Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+servers:
+- url: https://api.woox.io/
+tags:
+- name: IsolatedMargin
+paths:
+  /v3/isolatedMargin/margin:
+    post:
+      description: Adjust Isolated Margin
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdjustMargin'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - IsolatedMargin
+      summary: Create isolated margin margin
+      x-summary-source: derived
+      operationId: postV3IsolatedMarginMargin
+      x-operation-id-source: derived
+components:
+  parameters:
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+  schemas:
+    AdjustMargin:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: The trading pair for the futures position.
+        positionSide:
+          type: string
+          description: The side of the position (LONG or SHORT).
+        adjustToken:
+          type: string
+          description: The token used for the margin adjustment.
+        adjustAmount:
+          type: string
+          description: The amount of the token to be added or removed as margin.
+        action:
+          type: string
+          description: 'The action to take: ADD to increase margin or REMOVE to decrease margin.'
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

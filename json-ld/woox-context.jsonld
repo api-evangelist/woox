@@ -1,0 +1,307 @@
+{
+  "@context": {
+    "@vocab": "https://woox.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "woox": "https://woox.io/schema#",
+    "CommonResponse": "woox:CommonResponse",
+    "success": {
+      "@id": "woox:success",
+      "@type": "xsd:boolean"
+    },
+    "timestamp": {
+      "@id": "woox:timestamp",
+      "@type": "xsd:integer"
+    },
+    "GetOrderRowResponse": "woox:GetOrderRowResponse",
+    "symbol": {
+      "@id": "woox:symbol",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "woox:status",
+      "@type": "xsd:string"
+    },
+    "side": {
+      "@id": "woox:side",
+      "@type": "xsd:string"
+    },
+    "positionSide": {
+      "@id": "woox:positionSide",
+      "@type": "xsd:string"
+    },
+    "createdTime": {
+      "@id": "woox:createdTime",
+      "@type": "xsd:integer"
+    },
+    "orderId": {
+      "@id": "woox:orderId",
+      "@type": "xsd:integer"
+    },
+    "orderTag": {
+      "@id": "woox:orderTag",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "woox:price",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "woox:type",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "woox:quantity",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "woox:amount",
+      "@type": "xsd:string"
+    },
+    "visible": {
+      "@id": "woox:visible",
+      "@type": "xsd:string"
+    },
+    "executed": {
+      "@id": "woox:executed",
+      "@type": "xsd:string"
+    },
+    "totalFee": {
+      "@id": "woox:totalFee",
+      "@type": "xsd:string"
+    },
+    "feeAsset": {
+      "@id": "woox:feeAsset",
+      "@type": "xsd:string"
+    },
+    "totalRebate": {
+      "@id": "woox:totalRebate",
+      "@type": "xsd:decimal"
+    },
+    "rebateCurrency": {
+      "@id": "woox:rebateCurrency",
+      "@type": "xsd:string"
+    },
+    "clientOrderId": {
+      "@id": "woox:clientOrderId",
+      "@type": "xsd:integer"
+    },
+    "reduceOnly": {
+      "@id": "woox:reduceOnly",
+      "@type": "xsd:boolean"
+    },
+    "realizedPnl": {
+      "@id": "woox:realizedPnl",
+      "@type": "xsd:string"
+    },
+    "averageExecutedPrice": {
+      "@id": "woox:averageExecutedPrice",
+      "@type": "xsd:string"
+    },
+    "leverage": {
+      "@id": "woox:leverage",
+      "@type": "xsd:integer"
+    },
+    "marginMode": {
+      "@id": "woox:marginMode",
+      "@type": "xsd:string"
+    },
+    "bidAskLevel": {
+      "@id": "woox:bidAskLevel",
+      "@type": "xsd:integer"
+    },
+    "EditOrder": "woox:EditOrder",
+    "CreateOrder": "woox:CreateOrder",
+    "visibleQuantity": {
+      "@id": "woox:visibleQuantity",
+      "@type": "xsd:string"
+    },
+    "postOnlyAdjusted": {
+      "@id": "woox:postOnlyAdjusted",
+      "@type": "xsd:boolean"
+    },
+    "Meta": "woox:Meta",
+    "total": {
+      "@id": "woox:total",
+      "@type": "xsd:integer"
+    },
+    "recordsPerPage": {
+      "@id": "woox:recordsPerPage",
+      "@type": "xsd:integer"
+    },
+    "currentPage": {
+      "@id": "woox:currentPage",
+      "@type": "xsd:integer"
+    },
+    "common_algo": "woox:common_algo",
+    "algoOrderId": {
+      "@id": "woox:algoOrderId",
+      "@type": "xsd:integer"
+    },
+    "clientAlgoOrderId": {
+      "@id": "woox:clientAlgoOrderId",
+      "@type": "xsd:integer"
+    },
+    "common_algo_common_algo": "woox:common_algo_common_algo",
+    "algoOrderTag": {
+      "@id": "woox:algoOrderTag",
+      "@type": "xsd:string"
+    },
+    "AlgoBaseResponse": "woox:AlgoBaseResponse",
+    "algoType": {
+      "@id": "woox:algoType",
+      "@type": "xsd:string"
+    },
+    "GetAlgoOrderRowResponse": "woox:GetAlgoOrderRowResponse",
+    "rootAlgoOrderId": {
+      "@id": "woox:rootAlgoOrderId",
+      "@type": "xsd:integer"
+    },
+    "parentAlgoOrderId": {
+      "@id": "woox:parentAlgoOrderId",
+      "@type": "xsd:integer"
+    },
+    "isTriggered": {
+      "@id": "woox:isTriggered",
+      "@type": "xsd:boolean"
+    },
+    "triggerStatus": {
+      "@id": "woox:triggerStatus",
+      "@type": "xsd:string"
+    },
+    "rootAlgoStatus": {
+      "@id": "woox:rootAlgoStatus",
+      "@type": "xsd:string"
+    },
+    "algoStatus": {
+      "@id": "woox:algoStatus",
+      "@type": "xsd:string"
+    },
+    "triggerPriceType": {
+      "@id": "woox:triggerPriceType",
+      "@type": "xsd:string"
+    },
+    "triggerTime": {
+      "@id": "woox:triggerTime",
+      "@type": "xsd:string"
+    },
+    "totalExecutedQuantity": {
+      "@id": "woox:totalExecutedQuantity",
+      "@type": "xsd:string"
+    },
+    "updatedTime": {
+      "@id": "woox:updatedTime",
+      "@type": "xsd:integer"
+    },
+    "isActivated": {
+      "@id": "woox:isActivated",
+      "@type": "xsd:boolean"
+    },
+    "callbackRate": {
+      "@id": "woox:callbackRate",
+      "@type": "xsd:string"
+    },
+    "activatedPrice": {
+      "@id": "woox:activatedPrice",
+      "@type": "xsd:string"
+    },
+    "GetTransactionsRowResponse": "woox:GetTransactionsRowResponse",
+    "id": {
+      "@id": "woox:id",
+      "@type": "xsd:integer"
+    },
+    "executedPrice": {
+      "@id": "woox:executedPrice",
+      "@type": "xsd:string"
+    },
+    "executedQuantity": {
+      "@id": "woox:executedQuantity",
+      "@type": "xsd:string"
+    },
+    "isMaker": {
+      "@id": "woox:isMaker",
+      "@type": "xsd:integer"
+    },
+    "isMatchRpi": {
+      "@id": "woox:isMatchRpi",
+      "@type": "xsd:boolean"
+    },
+    "fee": {
+      "@id": "woox:fee",
+      "@type": "xsd:decimal"
+    },
+    "executedTimestamp": {
+      "@id": "woox:executedTimestamp",
+      "@type": "xsd:integer"
+    },
+    "CancelAllAfter": "woox:CancelAllAfter",
+    "triggerAfter": {
+      "@id": "woox:triggerAfter",
+      "@type": "xsd:integer"
+    },
+    "SetTradingMode": "woox:SetTradingMode",
+    "tradingMode": {
+      "@id": "woox:tradingMode",
+      "@type": "xsd:string"
+    },
+    "GetListenKey": "woox:GetListenKey",
+    "SetLeverage": "woox:SetLeverage",
+    "InterestRepay": "woox:InterestRepay",
+    "token": {
+      "@id": "woox:token",
+      "@type": "xsd:string"
+    },
+    "Transfer": "woox:Transfer",
+    "from": {
+      "@id": "woox:from"
+    },
+    "to": {
+      "@id": "woox:to"
+    },
+    "Withdraw": "woox:Withdraw",
+    "network": {
+      "@id": "woox:network",
+      "@type": "xsd:string"
+    },
+    "extra": {
+      "@id": "woox:extra",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "woox:address",
+      "@type": "xsd:string"
+    },
+    "SetAccountMarginMode": "woox:SetAccountMarginMode",
+    "defaultMarginMode": {
+      "@id": "woox:defaultMarginMode",
+      "@type": "xsd:string"
+    },
+    "SetFuturesLeverage": "woox:SetFuturesLeverage",
+    "positionMode": {
+      "@id": "woox:positionMode",
+      "@type": "xsd:string"
+    },
+    "AdjustMargin": "woox:AdjustMargin",
+    "adjustToken": {
+      "@id": "woox:adjustToken",
+      "@type": "xsd:string"
+    },
+    "adjustAmount": {
+      "@id": "woox:adjustAmount",
+      "@type": "xsd:string"
+    },
+    "action": {
+      "@id": "woox:action",
+      "@type": "xsd:string"
+    },
+    "PositionMode": "woox:PositionMode"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "WOO X API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects WOO X's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-13) from openapi/woox-openapi.json.",
+  "dcterms:created": "2026-10-13",
+  "dcterms:source": [
+    "openapi/woox-openapi.json"
+  ]
+}

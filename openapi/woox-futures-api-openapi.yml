@@ -1,0 +1,655 @@
+openapi: 3.2.0
+info:
+  title: Swagger Petstore - OpenAPI 3.0 Futures API
+  description: This is a sample Pet Store Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: API Team
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.19
+servers:
+- url: https://api.woox.io/
+tags:
+- name: Futures
+paths:
+  /v3/futures/defaultMarginMode:
+    get:
+      description: get account level default margin mode
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: ''
+        required: false
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultMarginModeResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Get futures default margin mode
+      x-summary-source: derived
+      operationId: getV3FuturesDefaultMarginMode
+      x-operation-id-source: derived
+    put:
+      description: set account level default margin mode
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAccountMarginMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security:
+      - ApiKeyAuth: []
+        ApiSignAuth: []
+        ApiTimestampAuth: []
+      tags:
+      - Futures
+      summary: Replace futures default margin mode
+      x-summary-source: derived
+      operationId: putV3FuturesDefaultMarginMode
+      x-operation-id-source: derived
+  /v3/futures/defaultMarginMode/{symbol}:
+    put:
+      description: set account level default margin mode
+      parameters:
+      - name: symbol
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ''
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAccountMarginMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security:
+      - ApiKeyAuth: []
+        ApiSignAuth: []
+        ApiTimestampAuth: []
+      tags:
+      - Futures
+      summary: Replace futures default margin mode by symbol
+      x-summary-source: derived
+      operationId: putV3FuturesDefaultMarginModeBySymbol
+      x-operation-id-source: derived
+  /v3/futures/defaultMarginMode/reset:
+    post:
+      description: reset account level default margin mode
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema: {}
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Create futures default margin mode reset
+      x-summary-source: derived
+      operationId: postV3FuturesDefaultMarginModeReset
+      x-operation-id-source: derived
+  /v3/futures/leverage:
+    get:
+      description: get account leverage
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: true
+        explode: true
+        schema:
+          type: string
+      - name: marginMode
+        in: query
+        description: 'values: CROSS | ISOLATED'
+        required: true
+        explode: true
+        schema:
+          type: string
+      - name: positionMode
+        in: query
+        description: 'values: ONE_WAY | HEDGE_MODE'
+        required: true
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeverageResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Get futures leverage
+      x-summary-source: derived
+      operationId: getV3FuturesLeverage
+      x-operation-id-source: derived
+    put:
+      description: set account leverage
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetFuturesLeverage'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Replace futures leverage
+      x-summary-source: derived
+      operationId: putV3FuturesLeverage
+      x-operation-id-source: derived
+  /v3/futures/fundingFee/history:
+    get:
+      description: get funding fee history
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: true
+        schema:
+          type: string
+      - name: startTime
+        in: query
+        description: Start timestamp in Unix timestamp format in milliseconds
+        required: false
+        schema:
+          type: integer
+      - name: endTime
+        in: query
+        description: End timestamp in Unix timestamp format in milliseconds
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        schema:
+          type: integer
+      - name: size
+        in: query
+        description: Data size per page, max 500
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFundingFeeHistoryResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Get futures funding fee history
+      x-summary-source: derived
+      operationId: getV3FuturesFundingFeeHistory
+      x-operation-id-source: derived
+  /v3/futures/positions:
+    get:
+      description: get positions
+      parameters:
+      - name: x-api-key
+        in: header
+        required: true
+        schema:
+          type: string
+          example: abcdef123456
+        description: ''
+      - name: x-api-signature
+        in: header
+        required: true
+        schema:
+          type: string
+          example: signaturestring
+        description: ''
+      - name: x-api-timestamp
+        in: header
+        required: true
+        schema:
+          type: string
+          example: '1718943200000'
+        description: ''
+      - name: symbol
+        in: query
+        description: Symbol name
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPositionsResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Get futures positions
+      x-summary-source: derived
+      operationId: getV3FuturesPositions
+      x-operation-id-source: derived
+  /v3/futures/positionMode:
+    put:
+      description: Set position mode
+      parameters:
+      - $ref: '#/components/parameters/ApiKeyHeader'
+      - $ref: '#/components/parameters/SignatureHeader'
+      - $ref: '#/components/parameters/TimestampHeader'
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PositionMode'
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+      security: []
+      tags:
+      - Futures
+      summary: Replace futures position mode
+      x-summary-source: derived
+      operationId: putV3FuturesPositionMode
+      x-operation-id-source: derived
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    SetFuturesLeverage:
+      required:
+      - symbol
+      - marginMode
+      - leverage
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: ''
+        marginMode:
+          type: string
+          description: 'values: CROSS | ISOLATED'
+        positionMode:
+          type: string
+          description: 'values: ONE_WAY | HEDGE_MODE Note:only required when marginMode=ISOLATED marginMode=CROSS , ignore this field'
+        leverage:
+          type: integer
+          description: ''
+    PositionMode:
+      type: object
+      properties:
+        positionMode:
+          type: string
+          description: ONE_WAY/HEDGE_MODE
+    GetPositionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                      description: The trading pair symbol, e.g., PERP_BTC_USDT.
+                    holding:
+                      type: string
+                      description: The current holding quantity of the asset in the position.
+                    positionSide:
+                      type: string
+                      description: The position side, such as 'BOTH' for a long and short position.
+                      enum:
+                      - BOTH
+                      - LONG
+                      - SHORT
+                    pendingLongQty:
+                      type: string
+                      description: The pending quantity for a long position.
+                    pendingShortQty:
+                      type: string
+                      description: The pending quantity for a short position.
+                    settlePrice:
+                      type: string
+                      description: The price at which the position will be settled.
+                    averageOpenPrice:
+                      type: string
+                      description: The average price at which the position was opened.
+                    pnl24H:
+                      type: string
+                      description: The profit and loss (PnL) for the position in the last 24 hours.
+                    fee24H:
+                      type: string
+                      description: The total fee for the position in the last 24 hours.
+                    markPrice:
+                      type: string
+                      description: The mark price of the position.
+                    estLiqPrice:
+                      type: string
+                      description: The estimated liquidation price of the position.
+                    adlQuantile:
+                      type: integer
+                      description: The ADL quantile, a risk management factor.
+                    timestamp:
+                      type: integer
+                      format: int64
+                      description: The timestamp of the position data in Unix epoch time (milliseconds).
+    SetAccountMarginMode:
+      required:
+      - defaultMarginMode
+      type: object
+      properties:
+        defaultMarginMode:
+          type: string
+          description: 'default margin mode Enums: CROSS | ISOLATED'
+    LeverageResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              symbol:
+                type: string
+                description: The trading pair or symbol (e.g., PERP_BTC_USDT).
+              marginMode:
+                type: string
+                description: The margin mode applied for the specified symbol.
+                enum:
+                - CROSS
+                - ISOLATED
+              positionMode:
+                type: string
+                description: The position mode applied for the specified symbol.
+                enum:
+                - ONE_WAY
+                - HEDGE_MODE
+              details:
+                type: array
+                description: Leverage settings for each position side.
+                items:
+                  type: object
+                  properties:
+                    positionSide:
+                      type: string
+                      description: The position side (LONG or SHORT).
+                      enum:
+                      - LONG
+                      - SHORT
+                    leverage:
+                      type: integer
+                      description: The leverage value set for this position side.
+                  required:
+                  - positionSide
+                  - leverage
+    GetFundingFeeHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the funding transaction.
+                    symbol:
+                      type: string
+                      description: The trading pair symbol, e.g., PERP_BTC_USDT.
+                    fundingRate:
+                      type: number
+                      format: float
+                      description: The funding rate applied to the position.
+                    markPrice:
+                      type: string
+                      description: The mark price of the position at the time of funding.
+                    fundingFee:
+                      type: string
+                      description: The total funding fee for the position.
+                    fundingIntervalHours:
+                      type: integer
+                      description: The interval in hours at which funding is paid or received.
+                    paymentType:
+                      type: string
+                      description: The type of funding payment, e.g., 'Receive' or 'Pay'.
+                    status:
+                      type: string
+                      description: The status of the funding transaction, e.g., 'COMPLETED'.
+                      enum:
+                      - COMPLETED
+                      - FAILED
+                    createdTime:
+                      type: integer
+                      format: int64
+                      description: The Unix timestamp when the funding transaction was created.
+                    updatedTime:
+                      type: integer
+                      format: int64
+                      description: The Unix timestamp when the funding transaction was last updated.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    DefaultMarginModeResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: integer
+                      description: ''
+                    defaultMarginMode:
+                      type: string
+                      description: ''
+                      enum:
+                      - ISOLATED
+                      - CROSSED
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+  parameters:
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    api_key:
+      type: apiKey
+      name: api_keyqq
+      in: header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+    ApiSignAuth:
+      type: apiKey
+      in: header
+      name: x-api-signature
+    ApiTimestampAuth:
+      type: apiKey
+      in: header
+      name: x-api-timestamp
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

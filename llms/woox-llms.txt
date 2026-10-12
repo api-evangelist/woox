@@ -1,0 +1,103 @@
+# WOO
+
+## Docs
+
+- [Woo Home Page](https://developer.woox.io/home.md)
+- [Introduction overview](https://developer.woox.io/troubleshooting/introduction.md)
+- [Stuck/delayed deposits](https://developer.woox.io/troubleshooting/user-issues/deposit-issues.md)
+- [Introduction](https://developer.woox.io/api-reference/introduction.md)
+- [Integration guide](https://developer.woox.io/api-reference/guide.md)
+- [Migration guide](https://developer.woox.io/api-reference/migration_guide.md)
+- [Error code](https://developer.woox.io/api-reference/error_code.md)
+- [Get system maintenance status](https://developer.woox.io/api-reference/endpoint/public_data/systemInfo.md): Get current system maintenance status. A status value of 0 means the system is functioning properly, a status value of 1 means the trading services are under maintenance and a status value of 2 means the system is under maintenance.
+- [Get instruments](https://developer.woox.io/api-reference/endpoint/public_data/instruments.md): Retrieve a list of Spot and USDT perpetual instruments.
+- [Available token](https://developer.woox.io/api-reference/endpoint/public_data/token.md): Get the available tokens that WOO X supports.
+- [Token network](https://developer.woox.io/api-reference/endpoint/public_data/tokenNetwork.md): Get the available networks for each token as well as the deposit/withdrawal information.
+- [Get token info](https://developer.woox.io/api-reference/endpoint/public_data/tokenInfo.md): Retrieve spot token information.
+- [Market trades](https://developer.woox.io/api-reference/endpoint/public_data/marketTrades.md): Get the latest market trades. In the response, a source of 1 means these are internal trades on WOO X and a source of 0 means they are external trades from aggregated sources.
+- [Market trades history](https://developer.woox.io/api-reference/endpoint/public_data/marketTradesHistory.md): Get historical market trades data. In the response, a source of 1 means these are internal trades on WOO X and a source of 0 means they are external trades from aggregated sources.
+- [Orderbook snapshot](https://developer.woox.io/api-reference/endpoint/public_data/orderbook.md): Get the snapshot of the symbol order book. Price of asks/bids are in descending order.
+- [Kline](https://developer.woox.io/api-reference/endpoint/public_data/kline.md): Get the latest klines of the trading instrument.
+- [Kline history](https://developer.woox.io/api-reference/endpoint/public_data/klineHistory.md): Get the historical klines of the trading instrument.
+- [Get futures info](https://developer.woox.io/api-reference/endpoint/public_data/futures.md): Get basic futures information for all the markets.
+- [Get predicted funding rate](https://developer.woox.io/api-reference/endpoint/public_data/fundingRate.md): Get predicted funding rate and the latest funding rate.
+- [Get funding rate history for one market](https://developer.woox.io/api-reference/endpoint/public_data/fundingRateHistory.md): Get funding rate history for one market.
+- [Get insurance fund](https://developer.woox.io/api-reference/endpoint/public_data/insuranceFund.md): Get the insurance fund balance by perp contract.
+- [Place order](https://developer.woox.io/api-reference/endpoint/trading/post_order.md): post order
+- [Cancel order](https://developer.woox.io/api-reference/endpoint/trading/cancel_order.md): cancel order
+- [Cancel multiple orders](https://developer.woox.io/api-reference/endpoint/trading/cancel_all_order.md): Cancel multiple orders
+- [Get order](https://developer.woox.io/api-reference/endpoint/trading/get_order.md): get order
+- [Get orders](https://developer.woox.io/api-reference/endpoint/trading/get_orders.md): get orders
+- [Edit order](https://developer.woox.io/api-reference/endpoint/trading/edit_order.md): edit order
+- [Place algo order](https://developer.woox.io/api-reference/endpoint/trading/post_algo_order.md): post algo order
+- [Cancel algo order](https://developer.woox.io/api-reference/endpoint/trading/cancel_algo_order.md): cancel algo order
+- [Cancel multiple algo orders](https://developer.woox.io/api-reference/endpoint/trading/cancel_algo_orders.md): cancel multiple algo orders
+- [Cancel all orders by symbol ](https://developer.woox.io/api-reference/endpoint/trading/cancel_orders_by_symbol.md): Cancel all orders by symbol
+- [Get algo order](https://developer.woox.io/api-reference/endpoint/trading/get_algo_order.md): get algo order
+- [Get algo orders](https://developer.woox.io/api-reference/endpoint/trading/get_algo_orders.md): get algo orders
+- [Edit algo order](https://developer.woox.io/api-reference/endpoint/trading/edit_algo_order.md): edit algo order
+- [Get transaction by trade id (last 3 months) ](https://developer.woox.io/api-reference/endpoint/trading/get_transaction.md): get transaction by trade id (last 3 months)
+- [Get transaction history (in the past 2 years) ](https://developer.woox.io/api-reference/endpoint/trading/get_transactions.md): Get transaction history (in the past 2 years)
+- [Get trading fee](https://developer.woox.io/api-reference/endpoint/trading/get_tradingFee.md): Get Trading Fee
+- [Cancel all after](https://developer.woox.io/api-reference/endpoint/trading/cancel_all_after.md): Cancel all after
+- [Get account information](https://developer.woox.io/api-reference/endpoint/account/get_account_info.md): Get the account information.
+- [Token config](https://developer.woox.io/api-reference/endpoint/account/get_token_config.md): Get the token level configurations.
+- [Symbol config](https://developer.woox.io/api-reference/endpoint/account/get_symbol_config.md): Get the symbol level configurations.
+- [Set account trading mode](https://developer.woox.io/api-reference/endpoint/account/trading_mode.md): Set account trading mode
+- [Get sub accounts](https://developer.woox.io/api-reference/endpoint/account/sub_accounts.md): Get account api key permission
+- [Get referral summary](https://developer.woox.io/api-reference/endpoint/account/summary.md): Get referral information from each user you has referred
+- [Get referral reward history](https://developer.woox.io/api-reference/endpoint/account/get_referral_reward_history.md): Get referral information from each user you has referred.
+- [Get account api key permission](https://developer.woox.io/api-reference/endpoint/account/credentials.md): Get account api key permission
+- [Get listen key](https://developer.woox.io/api-reference/endpoint/account/listen_key.md): get account listen key
+- [Get balances](https://developer.woox.io/api-reference/endpoint/assets/get_balances.md): Get balances
+- [Get token history](https://developer.woox.io/api-reference/endpoint/assets/token_history.md): get token history
+- [Get transfer history](https://developer.woox.io/api-reference/endpoint/assets/get_transfer_history.md): Get Transfer History
+- [Transfer assets](https://developer.woox.io/api-reference/endpoint/assets/transfer.md): transfer assets
+- [Get wallet history](https://developer.woox.io/api-reference/endpoint/assets/get_wallet_history.md): Get Wallet History
+- [Token withdraw](https://developer.woox.io/api-reference/endpoint/assets/wallet_withdraw.md): withdraw assets
+- [Get token deposit address](https://developer.woox.io/api-reference/endpoint/assets/get_wallet_deposit.md): Get Token Deposit Address
+- [Get staking yield history](https://developer.woox.io/api-reference/endpoint/assets/get_yield_history.md): Get Staking Yield History
+- [Get positions](https://developer.woox.io/api-reference/endpoint/futures/get_positions.md): get positions
+- [Get futures leverage](https://developer.woox.io/api-reference/endpoint/futures/get_leverage.md): get account leverage
+- [Set futures leverage](https://developer.woox.io/api-reference/endpoint/futures/set_leverage.md): set account leverage
+- [Set position mode](https://developer.woox.io/api-reference/endpoint/futures/position_mode.md): Set position mode
+- [Get default margin mode](https://developer.woox.io/api-reference/endpoint/futures/defaultMarginMode.md): get account level default margin mode
+- [Get funding fee history](https://developer.woox.io/api-reference/endpoint/futures/get_fundingFee_history.md): get funding fee history
+- [Set leverage](https://developer.woox.io/api-reference/endpoint/spot_margin/set_leverage.md): set leverage
+- [Get margin interest rates](https://developer.woox.io/api-reference/endpoint/spot_margin/get_interest_rate.md): Get spot margin interest rate
+- [Get interest history](https://developer.woox.io/api-reference/endpoint/spot_margin/get_interest_history.md): get spot margin interest history
+- [Repay interest ](https://developer.woox.io/api-reference/endpoint/spot_margin/interest_repay.md): Repay your margin interest.
+- [Get available margin](https://developer.woox.io/api-reference/endpoint/spot_margin/get_max_margin.md): Get max available margin for a given spot instrument.
+- [Introduction](https://developer.woox.io/api-reference/websocket_introduction.md)
+- [Orderbook update](https://developer.woox.io/api-reference/endpoint/websocket/Orderbook_update.md)
+- [Orderbook update (RPI)](https://developer.woox.io/api-reference/endpoint/websocket/Orderbook_update_rpi.md)
+- [Orderbook](https://developer.woox.io/api-reference/endpoint/websocket/ORDERBOOK10.md)
+- [BBO](https://developer.woox.io/api-reference/endpoint/websocket/BBO.md)
+- [BBO (RPI)](https://developer.woox.io/api-reference/endpoint/websocket/BBO_rpi.md)
+- [Trade](https://developer.woox.io/api-reference/endpoint/websocket/TRADE.md)
+- [Ticker](https://developer.woox.io/api-reference/endpoint/websocket/TICKER.md)
+- [Kline](https://developer.woox.io/api-reference/endpoint/websocket/KLINE.md)
+- [Index price](https://developer.woox.io/api-reference/endpoint/websocket/INDEX_PRICE.md)
+- [Mark price](https://developer.woox.io/api-reference/endpoint/websocket/MARKET_PRICE.md)
+- [Estimated funding rate](https://developer.woox.io/api-reference/endpoint/websocket/FUNDING_RATE.md)
+- [Open interest](https://developer.woox.io/api-reference/endpoint/websocket/OPEN_INTEREST.md)
+- [Account](https://developer.woox.io/api-reference/endpoint/websocket/private/Account.md)
+- [Balance](https://developer.woox.io/api-reference/endpoint/websocket/private/Balance.md)
+- [Position](https://developer.woox.io/api-reference/endpoint/websocket/private/Position.md)
+- [Execution report](https://developer.woox.io/api-reference/endpoint/websocket/private/Execution_report.md)
+- [Algo execution report](https://developer.woox.io/api-reference/endpoint/websocket/private/Algo_execution_report.md)
+- [Subscribe](https://developer.woox.io/api-reference/endpoint/websocket/subscribe.md)
+- [Unsubscribe](https://developer.woox.io/api-reference/endpoint/websocket/Unsubscribe.md)
+- [Unsubscribe all](https://developer.woox.io/api-reference/endpoint/websocket/Unsubscribe_all.md)
+- [List subscription](https://developer.woox.io/api-reference/endpoint/websocket/List_subscription.md)
+- [Legacy API](https://developer.woox.io/legacy-api-reference/introduction.md)
+- [V3 API](https://developer.woox.io/changelog/release_note_v3.md)
+- [Legacy API](https://developer.woox.io/changelog/release_note_v1.md)
+
+## OpenAPI Specs
+
+- [openapi-merged](https://developer.woox.io/openapi-merged.json)
+- [openapi](https://developer.woox.io/api-reference/openapi.json)
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

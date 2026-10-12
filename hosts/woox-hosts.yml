@@ -1,0 +1,114 @@
+generated: '2026-10-13'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 6
+  own: 5
+  other_domain: 1
+  platform: 0
+  roles:
+  - api
+  - docs
+  - other
+  - portal
+  - support
+  - website
+hosts:
+- host: api.woox.io
+  found_by:
+  - apis[]
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: woox.io
+  role: api
+  relation: own
+- host: developer.woox.io
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - spec-found
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - APIReference
+  - Documentation
+  - GettingStarted
+  - ChangeLog
+  serves:
+  - docs
+  - api
+  - spec
+  - cdn
+  - hosting
+  vendor: cloudflare
+  registrable_domain: woox.io
+  role: portal
+  relation: own
+- host: docs.woox.io
+  found_by:
+  - probed
+  - site-links
+  - namespace-probe
+  - docs-index
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - docs
+  title: WOO X API Reference
+  status: 200
+  registrable_domain: woox.io
+  role: docs
+  relation: own
+- host: mintlify.com
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: mintlify.com
+  role: other
+  relation: other-domain
+- host: support.woox.io
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - TermsOfService
+  - Support
+  - PrivacyPolicy
+  serves:
+  - support
+  vendor: zendesk
+  registrable_domain: woox.io
+  role: support
+  relation: own
+- host: woox.io
+  found_by:
+  - pointer
+  - probed
+  - contract-discovery
+  - well-known
+  types:
+  - Website
+  - Blog
+  - Leadership
+  serves: []
+  registrable_domain: woox.io
+  role: website
+  relation: own

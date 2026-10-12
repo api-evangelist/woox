@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/woox/main/json-schema/woox-create-order-schema.json",
+  "title": "CreateOrder",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/woox-openapi.json#/components/schemas/CreateOrder",
+  "required": [
+    "symbol",
+    "side",
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "description": "Symbol name"
+    },
+    "clientOrderId": {
+      "type": "integer",
+      "description": "Valid input ranges from 0 to 9223372036854775807"
+    },
+    "orderTag": {
+      "type": "string",
+      "description": "Optional tag for this order, max string length: 64"
+    },
+    "side": {
+      "type": "string",
+      "description": "BUY/SELL"
+    },
+    "positionSide": {
+      "type": "string",
+      "description": "Position side; The default is BOTH in the one way mode;  Can only be LONG or SHORT in the hedge mode.  Only applicable to perpetual instruments."
+    },
+    "type": {
+      "type": "string",
+      "description": "LIMIT/MARKET/IOC/FOK/POST_ONLY/ASK/BID/AC/RPI where AC/RPI are only available to market makers."
+    },
+    "price": {
+      "type": "string",
+      "description": "Only applicable to LIMIT/IOC/FOK/POST_ONLY orders;  MARKET/ASK/BID orders will ignore this field"
+    },
+    "quantity": {
+      "type": "string",
+      "description": "Either quantity or amount is required;  If both are passed, the request will be rejected"
+    },
+    "amount": {
+      "type": "string",
+      "description": "Only applicable to MARKET/ASK/BID orders on spot instruments;  Either quantity or amount is required;  If both are passed, the request will be rejected"
+    },
+    "reduceOnly": {
+      "type": "boolean",
+      "description": "Only applicable to perpetual instruments; Whether the order can only reduce in position size; valid options are true/false"
+    },
+    "visibleQuantity": {
+      "type": "string",
+      "description": "The order quantity visible on orderbook"
+    },
+    "marginMode": {
+      "type": "string",
+      "description": "CROSS / ISOLATED"
+    },
+    "bidAskLevel": {
+      "type": "string",
+      "description": "[1..5](only effective if type = ASK / BID)"
+    },
+    "postOnlyAdjusted": {
+      "type": "boolean",
+      "description": "Only applicable to POST_ONLY orders; Whether the order should be adjusted to the best bid/ask if it would cross the book and execute immediately as a taker"
+    }
+  }
+}

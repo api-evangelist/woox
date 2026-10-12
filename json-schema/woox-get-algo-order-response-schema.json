@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/woox/main/json-schema/woox-get-algo-order-response-schema.json",
+  "title": "GetAlgoOrderResponse",
+  "x-generated": "2026-10-13",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/woox-openapi.json#/components/schemas/GetAlgoOrderResponse",
+  "allOf": [
+    {
+      "$ref": "#/$defs/CommonResponse"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "algoOrderId": {
+              "type": "integer",
+              "description": "Unique identifier for the algorithmic order."
+            },
+            "clientAlgoOrderId": {
+              "type": "integer",
+              "description": "Client-generated algorithmic order ID."
+            },
+            "rootAlgoOrderId": {
+              "type": "integer",
+              "description": "Root algorithmic order ID."
+            },
+            "parentAlgoOrderId": {
+              "type": "integer",
+              "description": "Parent algorithmic order ID, 0 if none."
+            },
+            "symbol": {
+              "type": "string",
+              "description": "Trading pair identifier, e.g., SPOT_WOO_USDT."
+            },
+            "orderTag": {
+              "type": "string",
+              "description": "Tag associated with the order, e.g., 'default'."
+            },
+            "algoType": {
+              "type": "string",
+              "description": "Type of the algorithm, e.g., 'TRAILING_STOP'.",
+              "enum": [
+                "STOP",
+                "OCO",
+                "TRAILING_STOP",
+                "POSITIONAL_TP_SL",
+                "TP_SL",
+                "BRACKET",
+                "STOP_BRACKET"
+              ]
+            },
+            "side": {
+              "type": "string",
+              "description": "Order direction, e.g., 'BUY' or 'SELL'.",
+              "enum": [
+                "BUY",
+                "SELL"
+              ]
+            },
+            "positionSide": {
+              "type": "string",
+              "description": "Position direction, e.g., 'BOTH'.",
+              "enum": [
+                "BOTH",
+                "LONG",
+                "SHORT"
+              ]
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "The quantity for the order."
+            },
+            "isTriggered": {
+              "type": "boolean",
+              "description": "Indicates if the order has been triggered."
+            },
+            "triggerStatus": {
+              "type": "string",
+              "description": "The trigger status of the order, e.g., 'USELESS'.",
+              "enum": [
+                "USELESS",
+                "TRIGGERED",
+                "CANCELLED"
+              ]
+            },
+            "type": {
+              "type": "string",
+              "description": "Order type, e.g., 'MARKET'.",
+              "enum": [
+                "LIMIT",
+                "MARKET",
+                "IOC",
+                "POST_ONLY",
+                "AC",
+                "FOK",
+                "LIQUIDATE",
+                "BID",
+                "ASK",
+                "RPI"
+              ]
+            },
+            "rootAlgoStatus": {
+              "type": "string",
+              "description": "Status of the root algorithmic order, e.g., 'NEW'.",
+              "enum": [
+                "NEW",
+                "CANCELLED",
+                "PARTIAL_FILLED",
+                "FILLED",
+                "REJECTED"
+              ]
+            },
+            "algoStatus": {
+              "type": "string",
+              "description": "Status of the algorithmic order, e.g., 'NEW'.",
+              "enum": [
+                "NEW",
+                "CANCELLED",
+                "PARTIAL_FILLED",
+                "FILLED",
+                "REJECTED"
+              ]
+            },
+            "triggerPriceType": {
+              "type": "string",
+              "description": "The type of price used for triggering, e.g., 'MARKET_PRICE'.",
+              "enum": [
+                "MARKET_PRICE",
+                "INDEX_PRICE",
+                "LAST_PRICE"
+              ]
+            },
+            "triggerTime": {
+              "type": "string",
+              "description": "Timestamp for when the order is triggered, '0' if not triggered."
+            },
+            "totalExecutedQuantity": {
+              "type": "string",
+              "description": "Total quantity executed."
+            },
+            "averageExecutedPrice": {
+              "type": "string",
+              "description": "Average price of executed quantity."
+            },
+            "totalFee": {
+              "type": "string",
+              "description": "Total fee charged for the order."
+            },
+            "feeAsset": {
+              "type": "string",
+              "description": "Asset used for paying the fees."
+            },
+            "totalRebate": {
+              "type": "string",
+              "description": "Total rebate received for the order."
+            },
+            "rebateCurrency": {
+              "type": "string",
+              "description": "Currency in which rebate is paid, e.g., 'USDT'."
+            },
+            "reduceOnly": {
+              "type": "boolean",
+              "description": "Indicates if the order is reduce-only."
+            },
+            "createdTime": {
+              "type": "integer",
+              "description": "Timestamp of when the order was created."
+            },
+            "updatedTime": {
+              "type": "integer",
+              "description": "Timestamp of when the order was last updated."
+            },
+            "isActivated": {
+              "type": "boolean",
+              "description": "Indicates if the order is activated."
+            },
+            "callbackRate": {
+              "type": "string",
+              "description": "Callback rate for the algorithm, e.g., '0.03'."
+            },
+            "activatedPrice": {
+              "type": "string",
+              "description": "Activated price for the algorithm, e.g., '0.21'."
+            },
+            "leverage": {
+              "type": "integer",
+              "description": ""
+            },
+            "marginMode": {
+              "type": "string",
+              "description": "",
+              "enum": [
+                "ISOLATED",
+                "CROSSED"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "CommonResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "description": "true"
+        },
+        "timestamp": {
+          "type": "integer",
+          "description": "timestamp"
+        }
+      }
+    }
+  }
+}
