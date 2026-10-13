@@ -2,7 +2,13 @@ generated: '2026-10-13'
 method: derived
 generator: derive-problem-types.py
 source:
-- openapi/woox-openapi.json
+- openapi/woox-account-api-openapi.yml
+- openapi/woox-asset-api-openapi.yml
+- openapi/woox-futures-api-openapi.yml
+- openapi/woox-isolatedmargin-api-openapi.yml
+- openapi/woox-public-api-openapi.yml
+- openapi/woox-spotmargin-api-openapi.yml
+- openapi/woox-trade-api-openapi.yml
 format: custom
 envelope:
   media_type: null

@@ -46,8 +46,8 @@ hosts:
   - GettingStarted
   - ChangeLog
   serves:
-  - docs
   - api
+  - docs
   - spec
   - cdn
   - hosting
