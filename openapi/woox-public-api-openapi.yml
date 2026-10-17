@@ -509,6 +509,149 @@ components:
                     endTimestamp:
                       type: number
                       description: ''
+    OrderbookResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              asks:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: ''
+                    quantity:
+                      type: string
+                      description: ''
+              bids:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    price:
+                      type: string
+                      description: ''
+                    quantity:
+                      type: string
+                      description: ''
+    SystemInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              status:
+                type: integer
+                description: ''
+              msg:
+                type: string
+                description: ''
+              estimatedEndTime:
+                type: integer
+                description: ''
+    FuturesResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                      description: ''
+                    indexPrice:
+                      type: string
+                      description: ''
+                    markPrice:
+                      type: string
+                      description: ''
+                    estFundingRate:
+                      type: string
+                      description: ''
+                    lastFundingRate:
+                      type: string
+                      description: ''
+                    openInterest:
+                      type: string
+                      description: ''
+                    24hOpen:
+                      type: string
+                      description: ''
+                    24hClose:
+                      type: string
+                      description: ''
+                    24hHigh:
+                      type: string
+                      description: ''
+                    24hLow:
+                      type: string
+                      description: ''
+                    24hVolume:
+                      type: string
+                      description: ''
+                    24hAmount:
+                      type: string
+                      description: ''
+                    nextFundingTime:
+                      type: number
+                      description: ''
+    TokenResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: ''
+                    fullname:
+                      type: string
+                      description: ''
+                    decimals:
+                      type: number
+                      description: ''
+                    network:
+                      type: string
+                      description: ''
+    InsuranceFundResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: ''
+                    balance:
+                      type: number
+                      description: ''
     TokenInfoResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -562,119 +705,6 @@ components:
                     markPrice:
                       type: string
                       description: ''
-    SystemInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              status:
-                type: integer
-                description: ''
-              msg:
-                type: string
-                description: ''
-              estimatedEndTime:
-                type: integer
-                description: ''
-    InsuranceFundResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: ''
-                    balance:
-                      type: number
-                      description: ''
-    TokenResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: ''
-                    fullname:
-                      type: string
-                      description: ''
-                    decimals:
-                      type: number
-                      description: ''
-                    network:
-                      type: string
-                      description: ''
-    FuturesResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    symbol:
-                      type: string
-                      description: ''
-                    indexPrice:
-                      type: string
-                      description: ''
-                    markPrice:
-                      type: string
-                      description: ''
-                    estFundingRate:
-                      type: string
-                      description: ''
-                    lastFundingRate:
-                      type: string
-                      description: ''
-                    openInterest:
-                      type: string
-                      description: ''
-                    24hOpen:
-                      type: string
-                      description: ''
-                    24hClose:
-                      type: string
-                      description: ''
-                    24hHigh:
-                      type: string
-                      description: ''
-                    24hLow:
-                      type: string
-                      description: ''
-                    24hVolume:
-                      type: string
-                      description: ''
-                    24hAmount:
-                      type: string
-                      description: ''
-                    nextFundingTime:
-                      type: number
-                      description: ''
     KlineResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -718,37 +748,7 @@ components:
                     endTimestamp:
                       type: number
                       description: ''
-    OrderbookResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              asks:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    price:
-                      type: string
-                      description: ''
-                    quantity:
-                      type: string
-                      description: ''
-              bids:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    price:
-                      type: string
-                      description: ''
-                    quantity:
-                      type: string
-                      description: ''
-    MarketTradesResponse:
+    FundingRateResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
       - type: object
@@ -764,23 +764,26 @@ components:
                     symbol:
                       type: string
                       description: ''
-                    side:
+                    estFundingRate:
                       type: string
                       description: ''
-                    source:
+                    estFundingRateTimestamp:
                       type: number
                       description: ''
-                    executedPrice:
+                    lastFundingRate:
                       type: string
                       description: ''
-                    executedQuantity:
-                      type: string
-                      description: ''
-                    executedTimestamp:
+                    lastFundingRateTimestamp:
                       type: number
                       description: ''
-                    rpi:
-                      type: boolean
+                    nextFundingTime:
+                      type: number
+                      description: ''
+                    lastFundingIntervalHours:
+                      type: number
+                      description: ''
+                    estFundingIntervalHours:
+                      type: number
                       description: ''
     TokenNetworkResponse:
       allOf:
@@ -818,6 +821,77 @@ components:
                       description: ''
                     allowWithdraw:
                       type: number
+                      description: ''
+    MarketTradesResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                      description: ''
+                    side:
+                      type: string
+                      description: ''
+                    source:
+                      type: number
+                      description: ''
+                    executedPrice:
+                      type: string
+                      description: ''
+                    executedQuantity:
+                      type: string
+                      description: ''
+                    executedTimestamp:
+                      type: number
+                      description: ''
+                    rpi:
+                      type: boolean
+                      description: ''
+    MarketTradesHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: ''
+                    symbol:
+                      type: string
+                      description: ''
+                    side:
+                      type: string
+                      description: ''
+                    executedPrice:
+                      type: string
+                      description: ''
+                    executedQuantity:
+                      type: string
+                      description: ''
+                    executedTimestamp:
+                      type: number
+                      description: ''
+                    source:
+                      type: number
+                      description: ''
+                    rpi:
+                      type: boolean
                       description: ''
     InstrumentsResponse:
       allOf:
@@ -910,80 +984,6 @@ components:
                     isAllowedRpi:
                       type: boolean
                       description: 'indicate whether RPI is enabled for the symbol '
-    FundingRateResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    symbol:
-                      type: string
-                      description: ''
-                    estFundingRate:
-                      type: string
-                      description: ''
-                    estFundingRateTimestamp:
-                      type: number
-                      description: ''
-                    lastFundingRate:
-                      type: string
-                      description: ''
-                    lastFundingRateTimestamp:
-                      type: number
-                      description: ''
-                    nextFundingTime:
-                      type: number
-                      description: ''
-                    lastFundingIntervalHours:
-                      type: number
-                      description: ''
-                    estFundingIntervalHours:
-                      type: number
-                      description: ''
-    MarketTradesHistoryResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      description: ''
-                    symbol:
-                      type: string
-                      description: ''
-                    side:
-                      type: string
-                      description: ''
-                    executedPrice:
-                      type: string
-                      description: ''
-                    executedQuantity:
-                      type: string
-                      description: ''
-                    executedTimestamp:
-                      type: number
-                      description: ''
-                    source:
-                      type: number
-                      description: ''
-                    rpi:
-                      type: boolean
-                      description: ''
     CommonResponse:
       type: object
       properties:

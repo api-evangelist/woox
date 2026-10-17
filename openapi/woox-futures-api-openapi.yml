@@ -378,44 +378,62 @@ paths:
       operationId: putV3FuturesPositionMode
       x-operation-id-source: derived
 components:
+  parameters:
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
   schemas:
-    Meta:
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of record
-        recordsPerPage:
-          type: integer
-          description: Number of records per page
-        currentPage:
-          type: integer
-          description: Current page number
-    SetFuturesLeverage:
+    DefaultMarginModeResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: integer
+                      description: ''
+                    defaultMarginMode:
+                      type: string
+                      description: ''
+                      enum:
+                      - ISOLATED
+                      - CROSSED
+    SetAccountMarginMode:
       required:
-      - symbol
-      - marginMode
-      - leverage
+      - defaultMarginMode
       type: object
       properties:
-        symbol:
+        defaultMarginMode:
           type: string
-          description: ''
-        marginMode:
-          type: string
-          description: 'values: CROSS | ISOLATED'
-        positionMode:
-          type: string
-          description: 'values: ONE_WAY | HEDGE_MODE Note:only required when marginMode=ISOLATED marginMode=CROSS , ignore this field'
-        leverage:
-          type: integer
-          description: ''
-    PositionMode:
-      type: object
-      properties:
-        positionMode:
-          type: string
-          description: ONE_WAY/HEDGE_MODE
+          description: 'default margin mode Enums: CROSS | ISOLATED'
     GetPositionsResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -473,55 +491,43 @@ components:
                       type: integer
                       format: int64
                       description: The timestamp of the position data in Unix epoch time (milliseconds).
-    SetAccountMarginMode:
-      required:
-      - defaultMarginMode
+    PositionMode:
       type: object
       properties:
-        defaultMarginMode:
+        positionMode:
           type: string
-          description: 'default margin mode Enums: CROSS | ISOLATED'
-    LeverageResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              symbol:
-                type: string
-                description: The trading pair or symbol (e.g., PERP_BTC_USDT).
-              marginMode:
-                type: string
-                description: The margin mode applied for the specified symbol.
-                enum:
-                - CROSS
-                - ISOLATED
-              positionMode:
-                type: string
-                description: The position mode applied for the specified symbol.
-                enum:
-                - ONE_WAY
-                - HEDGE_MODE
-              details:
-                type: array
-                description: Leverage settings for each position side.
-                items:
-                  type: object
-                  properties:
-                    positionSide:
-                      type: string
-                      description: The position side (LONG or SHORT).
-                      enum:
-                      - LONG
-                      - SHORT
-                    leverage:
-                      type: integer
-                      description: The leverage value set for this position side.
-                  required:
-                  - positionSide
-                  - leverage
+          description: ONE_WAY/HEDGE_MODE
+    SetFuturesLeverage:
+      required:
+      - symbol
+      - marginMode
+      - leverage
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: ''
+        marginMode:
+          type: string
+          description: 'values: CROSS | ISOLATED'
+        positionMode:
+          type: string
+          description: 'values: ONE_WAY | HEDGE_MODE Note:only required when marginMode=ISOLATED marginMode=CROSS , ignore this field'
+        leverage:
+          type: integer
+          description: ''
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
     GetFundingFeeHistoryResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -573,7 +579,7 @@ components:
                       description: The Unix timestamp when the funding transaction was last updated.
               meta:
                 $ref: '#/components/schemas/Meta'
-    DefaultMarginModeResponse:
+    LeverageResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
       - type: object
@@ -581,20 +587,39 @@ components:
           data:
             type: object
             properties:
-              rows:
+              symbol:
+                type: string
+                description: The trading pair or symbol (e.g., PERP_BTC_USDT).
+              marginMode:
+                type: string
+                description: The margin mode applied for the specified symbol.
+                enum:
+                - CROSS
+                - ISOLATED
+              positionMode:
+                type: string
+                description: The position mode applied for the specified symbol.
+                enum:
+                - ONE_WAY
+                - HEDGE_MODE
+              details:
                 type: array
+                description: Leverage settings for each position side.
                 items:
                   type: object
                   properties:
-                    symbol:
-                      type: integer
-                      description: ''
-                    defaultMarginMode:
+                    positionSide:
                       type: string
-                      description: ''
+                      description: The position side (LONG or SHORT).
                       enum:
-                      - ISOLATED
-                      - CROSSED
+                      - LONG
+                      - SHORT
+                    leverage:
+                      type: integer
+                      description: The leverage value set for this position side.
+                  required:
+                  - positionSide
+                  - leverage
     CommonResponse:
       type: object
       properties:
@@ -604,31 +629,6 @@ components:
         timestamp:
           type: integer
           description: timestamp
-  parameters:
-    SignatureHeader:
-      name: x-api-signature
-      in: header
-      required: true
-      schema:
-        type: string
-        example: signaturestring
-      description: api-signature
-    TimestampHeader:
-      name: x-api-timestamp
-      in: header
-      required: true
-      schema:
-        type: string
-        example: '1718943200000'
-      description: api-timestamp
-    ApiKeyHeader:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
-        example: abcdef123456
-      description: api-key
   securitySchemes:
     bearerAuth:
       type: http

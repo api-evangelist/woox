@@ -350,128 +350,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Meta:
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of record
-        recordsPerPage:
-          type: integer
-          description: Number of records per page
-        currentPage:
-          type: integer
-          description: Current page number
-    CredentialsResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    accountName:
-                      type: string
-                      description: The account name associated with the API key, e.g., 'Main'.
-                    userId:
-                      type: integer
-                      description: The unique identifier of the user associated with the API key.
-                    apiKey:
-                      type: string
-                      description: The API key used for authentication.
-                    permissions:
-                      type: array
-                      items:
-                        type: string
-                        enum:
-                        - READ
-                        - TRADE
-                        - WITHDRAWAL
-                      description: The permissions assigned to the API key, e.g., 'READ', 'TRADE', 'WITHDRAWAL'.
-                    allowedIPs:
-                      type: array
-                      items:
-                        type: string
-                        format: ipv4
-                      description: A list of IP addresses allowed to use this API key. This field may be hidden if there is no IP restriction.
-              meta:
-                $ref: '#/components/schemas/Meta'
-    TokenConfigResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: Token symbol, e.g., BTC.
-                    collateralRatio:
-                      type: string
-                      description: The collateral ratio of the token, represented as a string.
-                    marginFactor:
-                      type: string
-                      description: The margin factor of the token, represented as a string for precision.
-                    collateral:
-                      type: boolean
-                      description: Indicates if the token is currently being used as collateral.
-                    canCollateral:
-                      type: boolean
-                      description: Indicates if the token can be used as collateral.
-                    canShort:
-                      type: boolean
-                      description: Indicates if short selling is supported for the token.
-                    marginMaxLeverage:
-                      type: integer
-                      description: Maximum leverage allowed for margin trading.
-                    marginMaxPosition:
-                      type: integer
-                      description: Maximum allowed position size for the token in margin trading.
-    SymbolConfigResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    symbol:
-                      type: string
-                      description: Trading pair symbol, e.g., PERP_BTC_USDT.
-                    marginFactor:
-                      type: string
-                      description: Margin factor for the trading pair, represented as a string for precision.
-                    maxLeverage:
-                      type: integer
-                      description: Maximum leverage allowed for this trading pair.
-                    maxPosition:
-                      type: integer
-                      description: Maximum position size allowed for this trading pair.
-    SetTradingMode:
-      required:
-      - tradingMode
-      type: object
-      properties:
-        tradingMode:
-          type: string
-          description: PURE_SPOT/MARGIN/FUTURES
-          example: PURE_SPOT
     GetListenKey:
       required:
       - type
@@ -561,6 +439,42 @@ components:
                 enum:
                 - Main
                 - Sub
+    ListenKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              authKey:
+                type: string
+                description: listenKey
+              expiredTime:
+                type: integer
+                description: ''
+    SubAccountsResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    applicationId:
+                      type: string
+                      description: The unique identifier for the application.
+                    name:
+                      type: string
+                      description: The name of the application or sub-account.
+                    createdTime:
+                      type: string
+                      description: The time the application was created, represented as a Unix timestamp in seconds with millisecond precision.
     ReferralResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -624,21 +538,7 @@ components:
                       description: Email address
               meta:
                 $ref: '#/components/schemas/Meta'
-    ListenKeyResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              authKey:
-                type: string
-                description: listenKey
-              expiredTime:
-                type: integer
-                description: ''
-    SubAccountsResponse:
+    CredentialsResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
       - type: object
@@ -651,15 +551,115 @@ components:
                 items:
                   type: object
                   properties:
-                    applicationId:
+                    accountName:
                       type: string
-                      description: The unique identifier for the application.
-                    name:
+                      description: The account name associated with the API key, e.g., 'Main'.
+                    userId:
+                      type: integer
+                      description: The unique identifier of the user associated with the API key.
+                    apiKey:
                       type: string
-                      description: The name of the application or sub-account.
-                    createdTime:
+                      description: The API key used for authentication.
+                    permissions:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - READ
+                        - TRADE
+                        - WITHDRAWAL
+                      description: The permissions assigned to the API key, e.g., 'READ', 'TRADE', 'WITHDRAWAL'.
+                    allowedIPs:
+                      type: array
+                      items:
+                        type: string
+                        format: ipv4
+                      description: A list of IP addresses allowed to use this API key. This field may be hidden if there is no IP restriction.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    SetTradingMode:
+      required:
+      - tradingMode
+      type: object
+      properties:
+        tradingMode:
+          type: string
+          description: PURE_SPOT/MARGIN/FUTURES
+          example: PURE_SPOT
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
+    SymbolConfigResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
                       type: string
-                      description: The time the application was created, represented as a Unix timestamp in seconds with millisecond precision.
+                      description: Trading pair symbol, e.g., PERP_BTC_USDT.
+                    marginFactor:
+                      type: string
+                      description: Margin factor for the trading pair, represented as a string for precision.
+                    maxLeverage:
+                      type: integer
+                      description: Maximum leverage allowed for this trading pair.
+                    maxPosition:
+                      type: integer
+                      description: Maximum position size allowed for this trading pair.
+    TokenConfigResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: Token symbol, e.g., BTC.
+                    collateralRatio:
+                      type: string
+                      description: The collateral ratio of the token, represented as a string.
+                    marginFactor:
+                      type: string
+                      description: The margin factor of the token, represented as a string for precision.
+                    collateral:
+                      type: boolean
+                      description: Indicates if the token is currently being used as collateral.
+                    canCollateral:
+                      type: boolean
+                      description: Indicates if the token can be used as collateral.
+                    canShort:
+                      type: boolean
+                      description: Indicates if short selling is supported for the token.
+                    marginMaxLeverage:
+                      type: integer
+                      description: Maximum leverage allowed for margin trading.
+                    marginMaxPosition:
+                      type: integer
+                      description: Maximum allowed position size for the token in margin trading.
     CommonResponse:
       type: object
       properties:
@@ -678,14 +678,6 @@ components:
         type: string
         example: signaturestring
       description: api-signature
-    ApiKeyHeader:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
-        example: abcdef123456
-      description: api-key
     TimestampHeader:
       name: x-api-timestamp
       in: header
@@ -694,6 +686,14 @@ components:
         type: string
         example: '1718943200000'
       description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
   securitySchemes:
     bearerAuth:
       type: http

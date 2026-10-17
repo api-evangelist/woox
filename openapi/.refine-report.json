@@ -1,7 +1,7 @@
 {
   "provider": "woox",
   "sources": [
-    "woox-openapi.json"
+    "_original/woox-openapi.json"
   ],
   "outputs": [
     "woox-account-api-openapi.yml",
@@ -12,12 +12,11 @@
     "woox-spotmargin-api-openapi.yml",
     "woox-trade-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/woox-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "woox-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
     "woox-openapi.json: tagged paths GET /v3/public/systemInfo -> Public",
     "woox-openapi.json: tagged paths GET /v3/public/instruments -> Public",
@@ -94,7 +93,15 @@
     "woox-openapi.json: declared missing tag: Public",
     "woox-openapi.json: declared missing tag: SpotMargin",
     "woox-openapi.json: declared missing tag: Trade",
-    "apis.yml register: written (+7 apis, 8 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "woox-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-asset-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-futures-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-isolatedmargin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-public-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-spotmargin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "woox-trade-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

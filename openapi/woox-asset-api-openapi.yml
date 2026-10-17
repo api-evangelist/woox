@@ -483,7 +483,92 @@ paths:
       operationId: getV3AssetBalances
       x-operation-id-source: derived
 components:
+  parameters:
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    start_filter:
+      name: startTime
+      in: query
+      description: start www time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
+    size_filter:
+      name: size
+      in: query
+      description: the page size you wish to query, default = 25, 1000 at max.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 25
+    end_filter:
+      name: endTime
+      in: query
+      description: end time in unix timestamp
+      required: false
+      explode: true
+      schema:
+        type: integer
+    page_filter:
+      name: page
+      in: query
+      description: the page you wish to query.
+      required: false
+      explode: true
+      schema:
+        type: integer
+        default: 1
   schemas:
+    Withdraw:
+      required:
+      - token
+      - network
+      - amount
+      - address
+      type: object
+      properties:
+        token:
+          type: string
+          description: Token name in upper case
+        network:
+          type: string
+          description: Network name (from /v3/public/token)
+        amount:
+          type: number
+          description: withdraw amount
+          example: ''
+        extra:
+          type: string
+          description: address extra information such as MEMO or TAG
+          example: ''
+        address:
+          type: string
+          description: the address you want to withdraw
+          example: ''
     Meta:
       type: object
       properties:
@@ -496,6 +581,205 @@ components:
         currentPage:
           type: integer
           description: Current page number
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+    TransferHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The unique identifier for the transfer.
+                    token:
+                      type: string
+                      description: The token symbol for the transfer, e.g., 'USDT'.
+                    amount:
+                      type: string
+                      description: The amount of the token transferred.
+                    status:
+                      type: string
+                      description: The status of the transfer, e.g., 'COMPLETED'.
+                      enum:
+                      - COMPLETED
+                      - FAILED
+                    from:
+                      type: object
+                      description: The source account details for the transfer.
+                      properties:
+                        applicationId:
+                          type: string
+                          description: The application ID of the source account.
+                        accountName:
+                          type: string
+                          description: The account name of the source account.
+                    to:
+                      type: object
+                      description: The destination account details for the transfer.
+                      properties:
+                        applicationId:
+                          type: string
+                          description: The application ID of the destination account.
+                        accountName:
+                          type: string
+                          description: The account name of the destination account.
+                    createdTime:
+                      type: string
+                      description: The time the transfer was created, represented as a string timestamp.
+                    updatedTime:
+                      type: string
+                      description: The time the transfer was last updated, represented as a string timestamp.
+              meta:
+                $ref: '#/components/schemas/Meta'
+    GetBalancesResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              holding:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: The token symbol (e.g., WOO).
+                    holding:
+                      type: string
+                      description: The total amount of the token currently held by the user.
+                    frozen:
+                      type: string
+                      description: The amount of the token that is frozen (e.g., due to open orders or other restrictions).
+                    staked:
+                      type: string
+                      description: The amount of the token that is currently staked.
+                    unbonding:
+                      type: string
+                      description: The amount of the token that is in the unbonding period.
+                    vault:
+                      type: string
+                      description: The amount of the token in the vault.
+                    interest:
+                      type: string
+                      description: The interest earned from holding the token.
+                    earn:
+                      type: string
+                      description: The amount of the token earned from yield or other programs.
+                    pendingShortQty:
+                      type: string
+                      description: The pending quantity for short positions.
+                    pendingLongQty:
+                      type: string
+                      description: The pending quantity for long positions.
+                    availableBalance:
+                      type: string
+                      description: The available balance of the token for trading or withdrawal.
+                    averageOpenPrice:
+                      type: string
+                      description: The average open price of the user's positions in the token.
+                    markPrice:
+                      type: string
+                      description: The current market price of the token.
+                    pnl24H:
+                      type: string
+                      description: The profit or loss in the past 24 hours for this token.
+                    fee24H:
+                      type: string
+                      description: The total fees incurred in the past 24 hours for this token.
+                    timestamp:
+                      type: integer
+                      format: int64
+                      description: The timestamp (Unix epoch in milliseconds) of the data snapshot.
+    TokenHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ''
+                    type:
+                      type: string
+                      description: type
+                      enum:
+                      - WITHDRAW
+                      - DEPOSIT
+                      - FIAT_WITHDRAW
+                      - FIAT_DEPOSIT
+                      - EARN
+                      - VAULT_WITHDRAW
+                      - VAULT_DEPOSIT
+                      - YIELD_TO_BALANCE
+                      - CREDIT
+                      - DISTRIBUTION
+                      - REFERRAL
+                      - SUB_ACCOUNT_TRANSFER
+                      - REBATE
+                      - LIQUIDATION
+                      - SPECIAL
+                      - STAKING
+                      - UNSTAKING
+                      - UNSTAKING_FEE
+                      - INTEREST
+                      - CONVERT
+                      - FUNDING_FEE
+                      - REALIZED_PNL
+                      - RFQ
+                      - COPY_FEE
+                      - COPY_PROFIT_SHARED
+                      - SPOT_TRANSACTION
+                      - TRANSACTION_FEE
+                    token:
+                      type: string
+                      description: token
+                    amount:
+                      type: string
+                      description: amount
+                    timestamp:
+                      type: integer
+                      description: timestamp
+              meta:
+                $ref: '#/components/schemas/Meta'
+    WalletDepositResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              address:
+                type: string
+                description: The deposit address for the token.
+              extra:
+                type: string
+                description: ''
     WithdrawResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -540,52 +824,6 @@ components:
                       description: The timestamp (Unix epoch in seconds) for the last yield calculation or payout.
               meta:
                 $ref: '#/components/schemas/Meta'
-    TransferResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: number
-                description: ''
-    CommonResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: 'true'
-        timestamp:
-          type: integer
-          description: timestamp
-    Withdraw:
-      required:
-      - token
-      - network
-      - amount
-      - address
-      type: object
-      properties:
-        token:
-          type: string
-          description: Token name in upper case
-        network:
-          type: string
-          description: Network name (from /v3/public/token)
-        amount:
-          type: number
-          description: withdraw amount
-          example: ''
-        extra:
-          type: string
-          description: address extra information such as MEMO or TAG
-          example: ''
-        address:
-          type: string
-          description: the address you want to withdraw
-          example: ''
     WalletHistoryResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -668,7 +906,7 @@ components:
                       - FAILED
               meta:
                 $ref: '#/components/schemas/Meta'
-    TransferHistoryResponse:
+    TransferResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
       - type: object
@@ -676,54 +914,9 @@ components:
           data:
             type: object
             properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: The unique identifier for the transfer.
-                    token:
-                      type: string
-                      description: The token symbol for the transfer, e.g., 'USDT'.
-                    amount:
-                      type: string
-                      description: The amount of the token transferred.
-                    status:
-                      type: string
-                      description: The status of the transfer, e.g., 'COMPLETED'.
-                      enum:
-                      - COMPLETED
-                      - FAILED
-                    from:
-                      type: object
-                      description: The source account details for the transfer.
-                      properties:
-                        applicationId:
-                          type: string
-                          description: The application ID of the source account.
-                        accountName:
-                          type: string
-                          description: The account name of the source account.
-                    to:
-                      type: object
-                      description: The destination account details for the transfer.
-                      properties:
-                        applicationId:
-                          type: string
-                          description: The application ID of the destination account.
-                        accountName:
-                          type: string
-                          description: The account name of the destination account.
-                    createdTime:
-                      type: string
-                      description: The time the transfer was created, represented as a string timestamp.
-                    updatedTime:
-                      type: string
-                      description: The time the transfer was last updated, represented as a string timestamp.
-              meta:
-                $ref: '#/components/schemas/Meta'
+              id:
+                type: number
+                description: ''
     Transfer:
       required:
       - tradingMode
@@ -747,199 +940,6 @@ components:
             applicationId:
               type: string
               description: the application which will transfer asset in
-    WalletDepositResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              address:
-                type: string
-                description: The deposit address for the token.
-              extra:
-                type: string
-                description: ''
-    TokenHistoryResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: ''
-                    type:
-                      type: string
-                      description: type
-                      enum:
-                      - WITHDRAW
-                      - DEPOSIT
-                      - FIAT_WITHDRAW
-                      - FIAT_DEPOSIT
-                      - EARN
-                      - VAULT_WITHDRAW
-                      - VAULT_DEPOSIT
-                      - YIELD_TO_BALANCE
-                      - CREDIT
-                      - DISTRIBUTION
-                      - REFERRAL
-                      - SUB_ACCOUNT_TRANSFER
-                      - REBATE
-                      - LIQUIDATION
-                      - SPECIAL
-                      - STAKING
-                      - UNSTAKING
-                      - UNSTAKING_FEE
-                      - INTEREST
-                      - CONVERT
-                      - FUNDING_FEE
-                      - REALIZED_PNL
-                      - RFQ
-                      - COPY_FEE
-                      - COPY_PROFIT_SHARED
-                      - SPOT_TRANSACTION
-                      - TRANSACTION_FEE
-                    token:
-                      type: string
-                      description: token
-                    amount:
-                      type: string
-                      description: amount
-                    timestamp:
-                      type: integer
-                      description: timestamp
-              meta:
-                $ref: '#/components/schemas/Meta'
-    GetBalancesResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              holding:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: The token symbol (e.g., WOO).
-                    holding:
-                      type: string
-                      description: The total amount of the token currently held by the user.
-                    frozen:
-                      type: string
-                      description: The amount of the token that is frozen (e.g., due to open orders or other restrictions).
-                    staked:
-                      type: string
-                      description: The amount of the token that is currently staked.
-                    unbonding:
-                      type: string
-                      description: The amount of the token that is in the unbonding period.
-                    vault:
-                      type: string
-                      description: The amount of the token in the vault.
-                    interest:
-                      type: string
-                      description: The interest earned from holding the token.
-                    earn:
-                      type: string
-                      description: The amount of the token earned from yield or other programs.
-                    pendingShortQty:
-                      type: string
-                      description: The pending quantity for short positions.
-                    pendingLongQty:
-                      type: string
-                      description: The pending quantity for long positions.
-                    availableBalance:
-                      type: string
-                      description: The available balance of the token for trading or withdrawal.
-                    averageOpenPrice:
-                      type: string
-                      description: The average open price of the user's positions in the token.
-                    markPrice:
-                      type: string
-                      description: The current market price of the token.
-                    pnl24H:
-                      type: string
-                      description: The profit or loss in the past 24 hours for this token.
-                    fee24H:
-                      type: string
-                      description: The total fees incurred in the past 24 hours for this token.
-                    timestamp:
-                      type: integer
-                      format: int64
-                      description: The timestamp (Unix epoch in milliseconds) of the data snapshot.
-  parameters:
-    page_filter:
-      name: page
-      in: query
-      description: the page you wish to query.
-      required: false
-      explode: true
-      schema:
-        type: integer
-        default: 1
-    start_filter:
-      name: startTime
-      in: query
-      description: start www time in unix timestamp
-      required: false
-      explode: true
-      schema:
-        type: integer
-    size_filter:
-      name: size
-      in: query
-      description: the page size you wish to query, default = 25, 1000 at max.
-      required: false
-      explode: true
-      schema:
-        type: integer
-        default: 25
-    ApiKeyHeader:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
-        example: abcdef123456
-      description: api-key
-    SignatureHeader:
-      name: x-api-signature
-      in: header
-      required: true
-      schema:
-        type: string
-        example: signaturestring
-      description: api-signature
-    TimestampHeader:
-      name: x-api-timestamp
-      in: header
-      required: true
-      schema:
-        type: string
-        example: '1718943200000'
-      description: api-timestamp
-    end_filter:
-      name: endTime
-      in: query
-      description: end time in unix timestamp
-      required: false
-      explode: true
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http

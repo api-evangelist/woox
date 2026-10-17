@@ -212,19 +212,63 @@ paths:
       operationId: getV3SpotMarginMaxMargin
       x-operation-id-source: derived
 components:
+  parameters:
+    SignatureHeader:
+      name: x-api-signature
+      in: header
+      required: true
+      schema:
+        type: string
+        example: signaturestring
+      description: api-signature
+    TimestampHeader:
+      name: x-api-timestamp
+      in: header
+      required: true
+      schema:
+        type: string
+        example: '1718943200000'
+      description: api-timestamp
+    ApiKeyHeader:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+        example: abcdef123456
+      description: api-key
   schemas:
-    Meta:
-      type: object
-      properties:
-        total:
-          type: integer
-          description: Total number of record
-        recordsPerPage:
-          type: integer
-          description: Number of records per page
-        currentPage:
-          type: integer
-          description: Current page number
+    InterestRateResponse:
+      allOf:
+      - $ref: '#/components/schemas/CommonResponse'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              rows:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: The token symbol, e.g., 'MATIC'.
+                    currentHourlyBaseRate:
+                      type: string
+                      description: The current hourly base rate for the token.
+                    estHourlyBaseRate:
+                      type: string
+                      description: The estimated hourly base rate for the token.
+                    currentAnnualBaseRate:
+                      type: string
+                      description: The current annual base rate for the token.
+                    estAnnualBaseRate:
+                      type: string
+                      description: The estimated annual base rate for the token.
+                    estTime:
+                      type: integer
+                      description: The estimated time in Unix timestamp (milliseconds).
     InterestRepay:
       required:
       - token
@@ -237,6 +281,36 @@ components:
         amount:
           type: number
           description: Repay amount
+    CommonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: 'true'
+        timestamp:
+          type: integer
+          description: timestamp
+    SetLeverage:
+      required:
+      - leverage
+      type: object
+      properties:
+        leverage:
+          type: integer
+          description: 'For margin mode: 3, 4, 5, 10; for futures mode: 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50'
+          example: '5'
+    Meta:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of record
+        recordsPerPage:
+          type: integer
+          description: Number of records per page
+        currentPage:
+          type: integer
+          description: Current page number
     GetInterestHistoryResponse:
       allOf:
       - $ref: '#/components/schemas/CommonResponse'
@@ -315,80 +389,6 @@ components:
               availableQuoteQuantity:
                 type: string
                 description: The maximum available quantity of the quote token to buy the base token.
-    SetLeverage:
-      required:
-      - leverage
-      type: object
-      properties:
-        leverage:
-          type: integer
-          description: 'For margin mode: 3, 4, 5, 10; for futures mode: 1, 2, 3, 4, 5, 10, 15, 20, 30, 40, 50'
-          example: '5'
-    InterestRateResponse:
-      allOf:
-      - $ref: '#/components/schemas/CommonResponse'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              rows:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: The token symbol, e.g., 'MATIC'.
-                    currentHourlyBaseRate:
-                      type: string
-                      description: The current hourly base rate for the token.
-                    estHourlyBaseRate:
-                      type: string
-                      description: The estimated hourly base rate for the token.
-                    currentAnnualBaseRate:
-                      type: string
-                      description: The current annual base rate for the token.
-                    estAnnualBaseRate:
-                      type: string
-                      description: The estimated annual base rate for the token.
-                    estTime:
-                      type: integer
-                      description: The estimated time in Unix timestamp (milliseconds).
-    CommonResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: 'true'
-        timestamp:
-          type: integer
-          description: timestamp
-  parameters:
-    SignatureHeader:
-      name: x-api-signature
-      in: header
-      required: true
-      schema:
-        type: string
-        example: signaturestring
-      description: api-signature
-    TimestampHeader:
-      name: x-api-timestamp
-      in: header
-      required: true
-      schema:
-        type: string
-        example: '1718943200000'
-      description: api-timestamp
-    ApiKeyHeader:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
-        example: abcdef123456
-      description: api-key
   securitySchemes:
     bearerAuth:
       type: http
