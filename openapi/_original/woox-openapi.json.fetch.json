@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.woox.io/openapi-merged.json",
+ "requested_url": "https://developer.woox.io/openapi-merged.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 257812,
+ "sha256": "837464d1d063c111fea0669d5604f8f65c78d9d593f9814acc27bdc615025c04",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
