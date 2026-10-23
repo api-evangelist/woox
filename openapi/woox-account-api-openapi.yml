@@ -718,3 +718,9 @@ components:
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
+x-provenance:
+  method: harvested
+  publisher: WOO X
+  source: https://developer.woox.io/openapi-merged.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
